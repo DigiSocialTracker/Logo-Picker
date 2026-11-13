@@ -15,7 +15,8 @@
   --bg:#0e1612;--panel:#16211b;--ink:#e8eee7;--muted:#92a198;--line:#25352c;--moss:#7fb18a;--brass:#d2ad74;--shadow:0 10px 30px rgba(0,0,0,.45);}}
 :root[data-theme="dark"]{--bg:#0e1612;--panel:#16211b;--ink:#e8eee7;--muted:#92a198;--line:#25352c;--moss:#7fb18a;--brass:#d2ad74;--shadow:0 10px 30px rgba(0,0,0,.45);}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
+*{box-sizing:border-box;scrollbar-width:none;-ms-overflow-style:none}
+*::-webkit-scrollbar{display:none}
 html,body{height:100%;height:100dvh;margin:0}
 body{background:var(--bg);color:var(--ink);font:500 15px/1.5 Manrope,system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
@@ -86,6 +87,7 @@ h1{font:400 clamp(24px,3.4vw,36px)/1.15 Fraunces,Georgia,serif;margin:0}
 label{display:block;font-size:14px;margin-bottom:6px}
 label span{color:var(--muted)}
 input,textarea{width:100%;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:500 15px Manrope,sans-serif;transition:border-color .3s,box-shadow .3s;resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.52;font-size:13px;font-weight:400}
 input:focus,textarea:focus{outline:0;border-color:var(--brass);box-shadow:0 0 0 4px color-mix(in srgb,var(--brass) 25%,transparent)}
 .name-box{margin-top:10px;background:var(--panel);border:1.5px solid var(--line);border-radius:22px;padding:22px 20px;display:flex;flex-direction:column;gap:12px}
 .name-box h3{font:600 20px/1.3 Fraunces,Georgia,serif;margin:0;text-align:center;color:var(--ink)}
@@ -114,16 +116,24 @@ input:focus,textarea:focus{outline:0;border-color:var(--brass);box-shadow:0 0 0 
 html[lang=ml] body,html[lang=ml] p,html[lang=ml] button,html[lang=ml] input,html[lang=ml] textarea,html[lang=ml] label,html[lang=ml] .step,html[lang=ml] .how li,html[lang=ml] .pick,html[lang=ml] .hint,html[lang=ml] .badge,html[lang=ml] .once-note{font-family:'Noto Sans Malayalam',Manrope,system-ui,sans-serif!important}
 html[lang=ml] .brand,html[lang=ml] h1,html[lang=ml] h2,html[lang=ml] h3{font-family:'Noto Serif Malayalam','Noto Sans Malayalam',Georgia,serif!important;font-weight:600;letter-spacing:0}
 html[lang=ml] h1{line-height:1.38}
+.hdr-right{display:flex;gap:12px;align-items:center}
+#steps:empty{display:none}
 @media (max-width:640px){
   .duo{grid-template-columns:1fr}
-  header{padding:20px 22px 12px}
+  header{display:grid;grid-template-columns:1fr auto;align-items:center;row-gap:10px;padding:20px 22px 12px}
+  .hdr-right{display:contents}
+  .brand{grid-column:1;grid-row:1}
+  #langBtn{grid-column:2;grid-row:1;justify-self:end}
+  .steps{grid-column:1 / -1;grid-row:2;justify-self:start}
   main{padding:0 22px 20px}
   .homewrap,.final{padding-left:2px;padding-right:2px;padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}
-  .stage{flex:0 0 auto;height:36dvh;min-height:220px;max-height:290px}
+  .stage{flex:0 0 auto;height:45dvh;min-height:275px;max-height:365px}
   .hint{top:10px;bottom:auto;left:10px;font-size:11.5px;padding:5px 10px}
   .tools{right:10px;bottom:10px}
   .tools button{width:34px;height:34px;font-size:16px}
   .bar{padding:16px 0 calc(32px + env(safe-area-inset-bottom,0px))}
+  .bar .btn{padding:12px 16px;font-size:13.5px}
+  .pick{font-size:13px;line-height:1.35}
   .step span{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
@@ -132,7 +142,7 @@ html[lang=ml] h1{line-height:1.38}
 <body>
 <header>
   <div class="brand">Choose our logo</div>
-  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div class="steps" id="steps"></div><button class="btn ghost" id="langBtn" style="padding:7px 14px;font-size:13px;display:none"></button></div>
+  <div class="hdr-right"><div class="steps" id="steps"></div><button class="btn ghost" id="langBtn" style="padding:7px 14px;font-size:13px;display:none"></button></div>
 </header>
 <main>
   <section class="view" id="v-lang">
