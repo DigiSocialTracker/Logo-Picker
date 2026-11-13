@@ -93,6 +93,10 @@ input:focus,textarea:focus{outline:0;border-color:var(--brass);box-shadow:0 0 0 
 .name-box h3{font:600 20px/1.3 Fraunces,Georgia,serif;margin:0;text-align:center;color:var(--ink)}
 .name-box p{margin:0;text-align:center;color:var(--muted);font-size:14px;line-height:1.6}
 .name-box input{background:var(--card)}
+.name-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:2px 0}
+.name-opt{border:0;border-radius:0;background:#ffffff;color:#1b4328;padding:13px 10px;font:600 13.5px/1.3 Manrope,sans-serif;cursor:pointer;text-align:center;transition:background .2s,color .2s}
+.name-opt:hover{background:#f2f6f3}
+.name-opt.on{background:#1b4328;color:#ffffff}
 .thanks{margin:auto;text-align:center;max-width:420px;padding:12px}
 .thanks svg{width:72px;height:72px;stroke:var(--moss);stroke-width:2.5;fill:none;stroke-dasharray:90;stroke-dashoffset:90;animation:draw 1s .2s forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
@@ -122,6 +126,7 @@ html[lang=ml] h1{line-height:1.38}
 #steps:empty{display:none}
 @media (max-width:640px){
   .duo{grid-template-columns:1fr}
+  .name-grid{grid-template-columns:repeat(2,1fr)}
   .hero-row{flex-direction:column-reverse;text-align:center;gap:16px;margin-bottom:4px}
   .lead{max-width:540px;text-align:center}
   .hero-img{width:150px;max-width:55%;margin:0 auto}
@@ -188,7 +193,8 @@ html[lang=ml] h1{line-height:1.38}
       <div class="name-box">
         <h3 id="bnameTitle">Suggest a Business Name</h3>
         <p id="bnameDesc">Have a fresh, memorable name in mind for our hi-tech farm and produce brand? Share your suggestion below—it’s completely optional, so feel free to leave it blank if you’d like.</p>
-        <input id="bname" maxlength="60" placeholder="A name you would love to see (optional)">
+        <div class="name-grid" id="nameGrid"></div>
+        <input id="bname" maxlength="60" placeholder="Or type your own name idea (optional)">
       </div>
       <button class="btn" id="submit">Send my choices</button>
     </div></div>
@@ -207,6 +213,15 @@ const CONFIG = {
   SUPABASE_URL: "https://miwdddkkaohdgpqkywps.supabase.co",
   SUPABASE_ANON_KEY: "sb_publishable_jVw0GUUlCQXYHDUcwbasLw_TsyWMFG5",
   STORAGE_KEY: "logo_picker_completed_v1",
+  NAME_PRESETS: [
+    "Farmee Fresh",
+    "Famee Fresh",
+    "Pachela",
+    "GreenVault",
+    "MycoFresh",
+    "PureSprout"
+  ],
+  categories: [
   categories: [
     { key:"product", title:"Mushroom and microgreens", sub:"Logos made directly for our mushroom and microgreen products. Choose one.", logos:[] },
     { key:"group",   title:"The farm fresh family",    sub:"Logos for the wider group of farm fresh products. Choose one.", logos:[] }
@@ -448,6 +463,23 @@ function setLang(l){
   else if(state.view==='v-cat')renderCat();
   else if(state.view==='v-final')renderFinal();
 }
+function renderNamePresets(){
+  const g=$("nameGrid");
+  if(!g||!CONFIG.NAME_PRESETS)return;
+  const cur=$("bname").value.trim().toLowerCase();
+  g.innerHTML=CONFIG.NAME_PRESETS.map(n=>`<button type="button" class="name-opt${cur===n.toLowerCase()?' on':''}" data-name="${n}">${n}</button>`).join("");
+  g.querySelectorAll(".name-opt").forEach(btn=>{
+    btn.onclick=()=>{
+      const v=btn.dataset.name;
+      const inp=$("bname");
+      inp.value=(inp.value.trim().toLowerCase()===v.toLowerCase())?"":v;
+      renderNamePresets();
+    };
+  });
+}
+$("bname").addEventListener("input",renderNamePresets);
+renderNamePresets();
+
 $('langBtn').onclick=()=>setLang(lang==='en'?'ml':'en');
 $('pickEn').onclick=()=>setLang('en');
 $('pickMl').onclick=()=>setLang('ml');
