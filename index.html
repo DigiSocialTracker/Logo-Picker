@@ -216,7 +216,12 @@ function applyLang(){
   document.title=t('brand');
 }
 
-/* ============ Supabase storage layer + IP + Browser Lock ============ */
+/* ============ Supabase storage layer + IP + URL Source + Browser Lock ============ */
+const VOTE_SOURCE=(()=>{
+  const p=new URLSearchParams(window.location.search);
+  return (p.get("src")||p.get("ref")||"direct").trim().toLowerCase().slice(0,40);
+})();
+
 const Store={
   hasSubmitted(){
     try{ return localStorage.getItem(CONFIG.STORAGE_KEY)!==null; }catch(e){ return false; }
@@ -235,6 +240,8 @@ const Store={
   },
   async submit(payload){
     if(this.hasSubmitted()) return {ok:true};
+    const baseUrl=(CONFIG.SUPABASE_URL||"").trim().replace(/\/+$/,"");
+    const apiKey=(CONFIG.SUPABASE_ANON_KEY||"").trim();
     const userIp=await this.getUserIP();
     const row={
       product_logo: payload.selections.product,
@@ -242,6 +249,7 @@ const Store={
       business_name: payload.businessName||null,
       voter_name: payload.voterName||null,
       language: payload.language,
+      vote_source: VOTE_SOURCE,
       user_ip: userIp,
       submitted_at: payload.submittedAt
     };
