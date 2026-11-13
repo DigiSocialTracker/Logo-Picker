@@ -228,23 +228,18 @@ const Store={
   hasSubmitted(){
     try{ return localStorage.getItem(CONFIG.STORAGE_KEY)!==null; }catch(e){ return false; }
   },
-  async getUserIP(){
-    try{
-      const ctrl=new AbortController();
-      const timer=setTimeout(()=>ctrl.abort(),2500);
-      const res=await fetch("https://api.ipify.org?format=json",{signal:ctrl.signal});
-      clearTimeout(timer);
-      const data=await res.json();
-      return data.ip||"unknown";
-    }catch(e){
-      return "unavailable";
-    }
+  getBrowserDefaults(){
+    let timezone="unknown";
+    try{ timezone=Intl.DateTimeFormat().resolvedOptions().timeZone||"unknown"; }catch(e){}
+    const browser_locale=navigator.language||"unknown";
+    const device_type=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||"")?"Mobile":"Desktop";
+    return {timezone,browser_locale,device_type};
   },
   async submit(payload){
     if(this.hasSubmitted()) return {ok:true};
     const baseUrl=(CONFIG.SUPABASE_URL||"").trim().replace(/\/+$/,"");
     const apiKey=(CONFIG.SUPABASE_ANON_KEY||"").trim();
-    const userIp=await this.getUserIP();
+    const info=this.getBrowserDefaults();
     const row={
       product_logo: payload.selections.product,
       group_logo: payload.selections.group,
@@ -253,7 +248,9 @@ const Store={
       remarks: payload.remarks||null,
       language: payload.language,
       vote_source: VOTE_SOURCE,
-      user_ip: userIp,
+      timezone: info.timezone,
+      browser_locale: info.browser_locale,
+      device_type: info.device_type,
       submitted_at: payload.submittedAt
     };
     const res=await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/logo_votes`,{
