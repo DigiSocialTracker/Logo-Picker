@@ -161,15 +161,14 @@ html[lang=ml] *{font-family:'Noto Sans Malayalam',Manrope,system-ui,sans-serif!i
    Each logo: { id (keep stable for future vote counts), name, src (image URL or data URI) }
    To use your own designs, replace src with a link. Add or remove items freely. */
 const CONFIG = {
-  SUPABASE_URL: "https://miwdddkkaohdgpqkywps.supabase.co/rest/v1/", // Paste your Supabase Project URL
-  SUPABASE_ANON_KEY: "sb_publishable_jVw0GUUlCQXYHDUcwbasLw_TsyWMFG5",         // Paste your Supabase anon public key
+  SUPABASE_URL: "https://miwdddkkaohdgpqkywps.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_jVw0GUUlCQXYHDUcwbasLw_TsyWMFG5",
   STORAGE_KEY: "logo_picker_completed_v1",
   categories: [
     { key:"product", title:"Mushroom and microgreens", sub:"Logos made directly for our mushroom and microgreen products. Choose one.", logos:[] },
     { key:"group",   title:"The farm fresh family",    sub:"Logos for the wider group of farm fresh products. Choose one.", logos:[] }
   ]
 };
-
 /* ---- free sample logos (inline SVG so they work offline) ---- */
 const G="#2f5d3a",L="#7fae5a",B="#8a5a3b",S="#eadfc8";
 const T=(s,f=17)=>`<text x="120" y="184" text-anchor="middle" font-family="Georgia,serif" font-size="${f}" letter-spacing="3" fill="#25342b">${s}</text>`;
