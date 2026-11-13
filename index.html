@@ -161,7 +161,9 @@ html[lang=ml] *{font-family:'Noto Sans Malayalam',Manrope,system-ui,sans-serif!i
    Each logo: { id (keep stable for future vote counts), name, src (image URL or data URI) }
    To use your own designs, replace src with a link. Add or remove items freely. */
 const CONFIG = {
-  API_URL: "", // later: your backend endpoint, e.g. "/api/submit"
+  SUPABASE_URL: "https://miwdddkkaohdgpqkywps.supabase.co/rest/v1/", // Paste your Supabase Project URL
+  SUPABASE_ANON_KEY: "sb_publishable_jVw0GUUlCQXYHDUcwbasLw_TsyWMFG5",         // Paste your Supabase anon public key
+  STORAGE_KEY: "logo_picker_completed_v1",
   categories: [
     { key:"product", title:"Mushroom and microgreens", sub:"Logos made directly for our mushroom and microgreen products. Choose one.", logos:[] },
     { key:"group",   title:"The farm fresh family",    sub:"Logos for the wider group of farm fresh products. Choose one.", logos:[] }
@@ -215,13 +217,48 @@ function applyLang(){
   document.title=t('brand');
 }
 
-/* ============ Backend-ready storage layer ============
-   Payload shape is what your future database will store:
-   { selections:{product:"product-3", group:"group-1"}, businessName, voterName, submittedAt } */
+/* ============ Supabase storage layer + IP + Browser Lock ============ */
 const Store={
+  hasSubmitted(){
+    try{ return localStorage.getItem(CONFIG.STORAGE_KEY)!==null; }catch(e){ return false; }
+  },
+  async getUserIP(){
+    try{
+      const ctrl=new AbortController();
+      const timer=setTimeout(()=>ctrl.abort(),2500);
+      const res=await fetch("https://api.ipify.org?format=json",{signal:ctrl.signal});
+      clearTimeout(timer);
+      const data=await res.json();
+      return data.ip||"unknown";
+    }catch(e){
+      return "unavailable";
+    }
+  },
   async submit(payload){
-    if(!CONFIG.API_URL){ await new Promise(r=>setTimeout(r,700)); console.log("Submission (no backend yet):",payload); return {ok:true}; }
-    const res=await fetch(CONFIG.API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    if(this.hasSubmitted()) return {ok:true};
+    const userIp=await this.getUserIP();
+    const row={
+      product_logo: payload.selections.product,
+      group_logo: payload.selections.group,
+      business_name: payload.businessName||null,
+      voter_name: payload.voterName||null,
+      language: payload.language,
+      user_ip: userIp,
+      submitted_at: payload.submittedAt
+    };
+    const res=await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/logo_votes`,{
+      method:"POST",
+      headers:{
+        "apikey": CONFIG.SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body:JSON.stringify(row)
+    });
+    if(res.ok){
+      try{ localStorage.setItem(CONFIG.STORAGE_KEY,JSON.stringify({submittedAt:payload.submittedAt,language:payload.language})); }catch(e){}
+    }
     return {ok:res.ok};
   }
 };
@@ -343,6 +380,7 @@ $("start").onclick=()=>renderCat();
 const isOff=(c,l)=>c!==cats[0]&&state.sel[cats[0].key]===l.id;
 function setLang(l){
   lang=l;document.documentElement.lang=l;applyLang();$('langBtn').style.display='';
+  if(Store.hasSubmitted()){show('v-done');$('steps').innerHTML='';return;}
   if(state.view==='v-lang'||state.view==='v-home')renderHome();
   else if(state.view==='v-cat')renderCat();
   else if(state.view==='v-final')renderFinal();
@@ -358,7 +396,20 @@ document.addEventListener('error',e=>{
   const s=document.createElement('span');s.textContent=t('nf');s.style.cssText='color:#66736b;font-size:12px;text-align:center';
   im.replaceWith(s);
 },true);
-show('v-lang');
+
+if(Store.hasSubmitted()){
+  try{
+    const saved=JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)||"{}");
+    if(saved.language)lang=saved.language;
+  }catch(e){}
+  document.documentElement.lang=lang;
+  applyLang();
+  $('langBtn').style.display='';
+  $('steps').innerHTML='';
+  show('v-done');
+}else{
+  show('v-lang');
+}
 </script>
 </body>
 </html>
