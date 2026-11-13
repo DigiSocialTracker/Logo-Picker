@@ -1,1 +1,364 @@
-,djh.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Choose our logo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Manrope:wght@400;500;600&family=Noto+Sans+Malayalam:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#e8ece6;--panel:#f4f6f1;--ink:#15221c;--muted:#66736b;--line:#cfd7cc;
+  --moss:#2f5d3a;--brass:#b8935a;--card:#fbfaf6;--shadow:0 10px 30px rgba(21,34,28,.10);
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1612;--panel:#16211b;--ink:#e8eee7;--muted:#92a198;--line:#25352c;--moss:#7fb18a;--brass:#d2ad74;--shadow:0 10px 30px rgba(0,0,0,.45);}}
+:root[data-theme="dark"]{--bg:#0e1612;--panel:#16211b;--ink:#e8eee7;--muted:#92a198;--line:#25352c;--moss:#7fb18a;--brass:#d2ad74;--shadow:0 10px 30px rgba(0,0,0,.45);}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:500 15px/1.5 Manrope,system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 24px;flex-wrap:wrap}
+.brand{font:600 20px Fraunces,Georgia,serif;letter-spacing:.2px}
+.steps{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:13px}
+.step{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;transition:.4s}
+.step i{width:8px;height:8px;border-radius:50%;background:var(--line);transition:.4s}
+.step.on{color:var(--ink);background:var(--panel)}
+.step.on i{background:var(--brass);box-shadow:0 0 0 4px color-mix(in srgb,var(--brass) 25%,transparent)}
+.step.done i{background:var(--moss)}
+.step.done{color:var(--ink)}
+main{flex:1;min-height:0;display:flex;flex-direction:column;padding:0 24px}
+.title{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;padding:4px 0 14px}
+h1{font:400 clamp(24px,3.4vw,36px)/1.15 Fraunces,Georgia,serif;margin:0}
+.sub{color:var(--muted);margin:4px 0 0;font-size:14px}
+.view{flex:1;min-height:0;display:none;flex-direction:column;animation:fade .6s ease both}
+.view.show{display:flex}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* zoom stage */
+.stage{position:relative;flex:1;min-height:0;border-radius:22px;background:var(--panel);border:1px solid var(--line);overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.stage.grabbing{cursor:grabbing}
+.plane{position:absolute;left:0;top:0;transform-origin:0 0;display:grid;grid-template-columns:repeat(3,300px);gap:28px;padding:40px;width:max-content;will-change:transform}
+.plane.smooth{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.card{position:relative;background:var(--card);border-radius:18px;border:1.5px solid transparent;box-shadow:var(--shadow);overflow:hidden;opacity:0;animation:rise .7s cubic-bezier(.2,.8,.2,1) forwards;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.card:hover{transform:translateY(-4px)}
+.card .img{height:230px;display:flex;align-items:center;justify-content:center;padding:18px}
+.card img{max-width:100%;max-height:100%;object-fit:contain;pointer-events:none;-webkit-user-drag:none}
+.card .cap{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #e6e8e1;color:#15221c;font-size:14px}
+.card .tick{width:24px;height:24px;border-radius:50%;border:1.5px solid #c4cbc0;display:grid;place-items:center;transition:.35s}
+.card .tick svg{width:14px;height:14px;stroke:#fff;stroke-width:3;fill:none;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .4s .1s}
+.card.sel{border-color:var(--brass);box-shadow:0 0 0 4px color-mix(in srgb,var(--brass) 30%,transparent),var(--shadow);animation:rise .7s forwards,pop .5s}
+.card.sel .tick{background:var(--moss);border-color:var(--moss)}
+.card.sel .tick svg{stroke-dashoffset:0}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.04)}100%{transform:scale(1)}}
+.stage.locked .card{pointer-events:none}
+.stage.locked .card:not(.sel){opacity:.35!important;filter:grayscale(.8);transition:.6s}
+.ripple{position:absolute;border-radius:50%;background:color-mix(in srgb,var(--brass) 40%,transparent);transform:scale(0);animation:rip .7s ease-out forwards;pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+.tools{position:absolute;right:14px;bottom:14px;display:flex;gap:6px;z-index:3}
+.tools button,.hint{background:var(--card);color:#15221c;border:1px solid var(--line);box-shadow:var(--shadow)}
+.tools button{width:38px;height:38px;border-radius:12px;font:600 18px Manrope,sans-serif;cursor:pointer;transition:transform .2s}
+.tools button:active{transform:scale(.9)}
+.hint{position:absolute;left:14px;bottom:14px;padding:7px 12px;border-radius:12px;font-size:12.5px;color:var(--muted);z-index:3;transition:opacity .6s}
+/* bottom bar */
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0;flex-wrap:wrap}
+.pick{color:var(--muted);font-size:14px}
+.pick b{color:var(--ink);font-weight:600}
+.btn{border:0;border-radius:14px;padding:13px 24px;font:600 15px Manrope,sans-serif;cursor:pointer;background:var(--moss);color:#fff;position:relative;overflow:hidden;transition:transform .2s,opacity .3s,box-shadow .3s}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn{color:#0e1612}}
+:root[data-theme="dark"] .btn{color:#0e1612}
+.btn:hover:not(:disabled){box-shadow:0 8px 22px color-mix(in srgb,var(--moss) 40%,transparent)}
+.btn:active:not(:disabled){transform:scale(.97)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+/* final form */
+.final{flex:1;min-height:0;overflow:auto;display:flex;justify-content:center;padding:4px 0 24px}
+.sheet{width:min(560px,100%);display:flex;flex-direction:column;gap:18px}
+.recap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.recap div{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px;text-align:center}
+.recap img{width:100%;height:110px;object-fit:contain;background:#fbfaf6;border-radius:12px;padding:8px}
+.recap small{display:block;color:var(--muted);margin:8px 0 2px}
+.recap a{color:var(--moss);cursor:pointer;font-size:13px;text-decoration:underline}
+label{display:block;font-size:14px;margin-bottom:6px}
+label span{color:var(--muted)}
+input{width:100%;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:500 15px Manrope,sans-serif;transition:border-color .3s,box-shadow .3s}
+input:focus{outline:0;border-color:var(--brass);box-shadow:0 0 0 4px color-mix(in srgb,var(--brass) 25%,transparent)}
+.thanks{margin:auto;text-align:center;max-width:420px}
+.thanks svg{width:72px;height:72px;stroke:var(--moss);stroke-width:2.5;fill:none;stroke-dasharray:90;stroke-dashoffset:90;animation:draw 1s .2s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.homewrap{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:6px 0 28px}
+.lead{max-width:560px;margin:0}
+.how{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;list-style:none;margin:0;padding:0;counter-reset:s}
+.how li{counter-increment:s;display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 16px 8px 8px;font-size:14px}
+.how li::before{content:counter(s);width:24px;height:24px;border-radius:50%;background:var(--moss);color:var(--bg);display:grid;place-items:center;font-size:12px;font-weight:600}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:min(900px,100%)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;text-align:left;display:flex;flex-direction:column;gap:12px;transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .3s}
+.panel:hover{transform:translateY(-4px);border-color:var(--brass)}
+.panel h2{font:400 22px Fraunces,Georgia,serif;margin:0}
+.panel p{margin:0;color:var(--muted);font-size:14px}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.thumbs img{width:calc(20% - 7px);min-width:48px;aspect-ratio:1;object-fit:contain;background:#fbfaf6;border-radius:10px;padding:4px}
+.panel.l{animation:fade .7s .1s both}.panel.r{animation:fade .7s .3s both}
+.langs{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}.langs .btn{min-width:180px;font-size:19px;padding:18px 28px}#pickMl{font-family:'Noto Sans Malayalam',Manrope,sans-serif}
+.badge{position:absolute;top:10px;left:10px;font-style:normal;font-size:12px;background:var(--ink);color:var(--bg);padding:3px 10px;border-radius:999px;z-index:2}
+.card.off{pointer-events:none;box-shadow:none}.card.off .img,.card.off .cap>span:first-child{opacity:.28;filter:grayscale(1)}
+html[lang=ml] *{font-family:'Noto Sans Malayalam',Manrope,system-ui,sans-serif!important}html[lang=ml] h1{line-height:1.4}
+@media (max-width:640px){.duo{grid-template-columns:1fr}}
+@media (max-width:640px){header,main{padding-left:14px;padding-right:14px}.step span{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Choose our logo</div>
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div class="steps" id="steps"></div><button class="btn ghost" id="langBtn" style="padding:7px 14px;font-size:13px;display:none"></button></div>
+</header>
+<main>
+  <section class="view" id="v-lang">
+    <div class="homewrap" style="justify-content:center">
+      <h1>Choose your language</h1>
+      <p class="sub" style="margin:0">ഭാഷ തിരഞ്ഞെടുക്കുക</p>
+      <div class="langs"><button class="btn" id="pickEn">English</button><button class="btn" id="pickMl">മലയാളം</button></div>
+    </div>
+  </section>
+  <section class="view" id="v-home">
+    <div class="homewrap">
+      <h1>Help us choose our logo</h1>
+      <p class="sub lead">We are building a brand for fresh, home-grown produce. Look at two sets of logo concepts and pick the one you like best from each. It takes about a minute.</p>
+      <ol class="how"><li>Choose one logo from each set</li><li>Lock your choice</li><li>Suggest a name, if you like</li></ol>
+      <div class="duo" id="duo"></div>
+      <button class="btn" id="start">Start choosing</button>
+    </div>
+  </section>
+  <section class="view" id="v-cat">
+    <div class="title"><div><h1 id="cTitle"></h1><p class="sub" id="cSub"></p></div></div>
+    <div class="stage" id="stage">
+      <div class="plane" id="plane"></div>
+      <div class="hint" id="hint">Scroll or pinch to zoom. Drag to explore.</div>
+      <div class="tools"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">&minus;</button><button id="zfit" aria-label="Fit to screen" title="Fit">&#x2922;</button></div>
+    </div>
+    <div class="bar"><div class="pick" id="pick"></div><button class="btn" id="lock" disabled>Lock choice</button></div>
+  </section>
+  <section class="view" id="v-final">
+    <div class="title"><div><h1>Almost done</h1><p class="sub">Suggest a name if you have one. Everything here is optional.</p></div></div>
+    <div class="final"><div class="sheet">
+      <div class="recap" id="recap"></div>
+      <div><label for="bname">Business name suggestion <span>(optional)</span></label><input id="bname" maxlength="60" placeholder="A name you would love to see"></div>
+      <div><label for="vname">Your name <span>(optional)</span></label><input id="vname" maxlength="60" placeholder="Leave blank to stay anonymous"></div>
+      <button class="btn" id="submit">Send my choices</button>
+    </div></div>
+  </section>
+  <section class="view" id="v-done">
+    <div class="thanks"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="22"/><path d="M15 27l8 8 14-16"/></svg>
+    <h1 style="margin-top:18px">Thank you for your support</h1><p class="sub">Your choices have been received. Every opinion helps us shape a brand people will love. We truly appreciate your time.</p></div>
+  </section>
+</main>
+
+<script>
+/* ============ CONFIG: edit here ============
+   Each logo: { id (keep stable for future vote counts), name, src (image URL or data URI) }
+   To use your own designs, replace src with a link. Add or remove items freely. */
+const CONFIG = {
+  API_URL: "", // later: your backend endpoint, e.g. "/api/submit"
+  categories: [
+    { key:"product", title:"Mushroom and microgreens", sub:"Logos made directly for our mushroom and microgreen products. Choose one.", logos:[] },
+    { key:"group",   title:"The farm fresh family",    sub:"Logos for the wider group of farm fresh products. Choose one.", logos:[] }
+  ]
+};
+
+/* ---- free sample logos (inline SVG so they work offline) ---- */
+const G="#2f5d3a",L="#7fae5a",B="#8a5a3b",S="#eadfc8";
+const T=(s,f=17)=>`<text x="120" y="184" text-anchor="middle" font-family="Georgia,serif" font-size="${f}" letter-spacing="3" fill="#25342b">${s}</text>`;
+const leaf=(x,y,r,c=L)=>`<path transform="translate(${x} ${y}) rotate(${r})" d="M0 0c-16-4-24-14-24-26 16 0 26 10 24 26z" fill="${c}"/>`;
+const svg=b=>"data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200">${b}</svg>`);
+const S1=[
+ ["Sprout Cap",`<path d="M60 112a60 55 0 0 1 120 0z" fill="${B}"/><rect x="105" y="112" width="30" height="42" rx="13" fill="${S}"/><path d="M120 60V44" stroke="${G}" stroke-width="4"/>${leaf(120,46,0)}${leaf(120,46,0).replace("rotate(0)","rotate(0) scale(-1 1)")}${T("SPROUT CAP")}`],
+ ["Gill and Leaf",`<circle cx="120" cy="92" r="64" fill="none" stroke="${G}" stroke-width="3"/><path d="M80 104a40 34 0 0 1 80 0z" fill="${B}"/><rect x="108" y="104" width="24" height="26" rx="9" fill="${S}"/>${leaf(156,82,35)}${T("GILL &amp; LEAF")}`],
+ ["Spore",`<path d="M70 108a50 44 0 0 1 100 0z" fill="none" stroke="${G}" stroke-width="4"/><path d="M104 108v30q0 12 16 12t16-12v-30" fill="none" stroke="${G}" stroke-width="4"/><path d="M120 64V48" stroke="${G}" stroke-width="3"/>${leaf(120,52,0)}<circle cx="96" cy="94" r="3" fill="${L}"/><circle cx="120" cy="86" r="3" fill="${L}"/><circle cx="144" cy="94" r="3" fill="${L}"/>${T("SPORE",19)}`],
+ ["Micro Mycelia",`<path d="M120 22c50 20 62 70 0 124-62-54-50-104 0-124z" fill="${L}"/><path d="M92 104a28 24 0 0 1 56 0z" fill="#fff" opacity=".92"/><rect x="112" y="104" width="16" height="24" rx="6" fill="#fff" opacity=".92"/>${T("MICRO MYCELIA",15)}`],
+ ["Cap and Cotyledon",`<circle cx="92" cy="60" r="3" fill="${L}"/><circle cx="148" cy="56" r="3" fill="${L}"/><circle cx="120" cy="40" r="3" fill="${L}"/><path d="M72 112a48 42 0 0 1 96 0z" fill="#3b2a20"/><rect x="106" y="112" width="28" height="30" rx="11" fill="${S}"/>${leaf(104,150,-20)}${leaf(136,150,20).replace("rotate(20)","rotate(20) scale(-1 1)")}${T("CAP &amp; COTYLEDON",14)}`]
+];
+const S2=[
+ ["Sun Rows",`<circle cx="120" cy="72" r="32" fill="#e0a63a"/><g fill="none" stroke="${G}" stroke-width="4" stroke-linecap="round"><path d="M40 118q80-30 160 0"/><path d="M40 136q80-30 160 0"/><path d="M40 154q80-30 160 0"/></g>${T("SUN ROWS")}`],
+ ["Golden Grain",`<circle cx="120" cy="90" r="66" fill="none" stroke="${B}" stroke-width="3"/><path d="M120 150V46" stroke="${B}" stroke-width="3"/>${[58,80,102].map(y=>`<ellipse cx="106" cy="${y}" rx="6" ry="13" transform="rotate(-28 106 ${y})" fill="#d3a44a"/><ellipse cx="134" cy="${y}" rx="6" ry="13" transform="rotate(28 134 ${y})" fill="#d3a44a"/>`).join("")}${T("GOLDEN GRAIN")}`],
+ ["Fresh Basket",`<path d="M82 90a38 38 0 0 1 76 0" fill="none" stroke="${B}" stroke-width="5"/><circle cx="104" cy="82" r="14" fill="#c4452f"/><circle cx="134" cy="80" r="13" fill="${L}"/><circle cx="120" cy="68" r="12" fill="#e08a2e"/><path d="M62 94h116l-14 54H76z" fill="${B}"/>${T("FRESH BASKET")}`],
+ ["Pure Roots",`<path d="M120 24c34 40 44 62 44 82a44 44 0 0 1-88 0c0-20 10-42 44-82z" fill="${G}"/><path d="M120 132V78" stroke="#fff" stroke-width="3"/><path d="M120 108c-14 0-20-8-20-18 14 0 20 6 20 18zM120 96c14 0 20-8 20-18-14 0-20 6-20 18z" fill="#fff"/><path d="M104 150q16 14 32 0" stroke="${B}" stroke-width="3" fill="none"/>${T("PURE ROOTS")}`],
+ ["Hex Mark",`<polygon points="120,18 178,50 178,114 120,146 62,114 62,50" fill="${G}"/><text x="120" y="102" text-anchor="middle" font-family="Georgia,serif" font-size="62" fill="#fff">F</text>${T("FARM &amp; CO.",15)}`]
+];
+/* ---- your 21 logos on GitHub: LG001 to LG021 (extension is auto-detected from this list) ---- */
+const LOGO_BASE='https://rmoosa2014.github.io/Restaurant-menu/Mushroom/';
+const LOGO_EXTS=['png','jpg','jpeg','webp','svg'];
+const ALL=Array.from({length:21},(_,i)=>{const n='LG'+String(i+1).padStart(3,'0');return{id:n,name:n,base:LOGO_BASE+n,src:LOGO_BASE+n+'.'+LOGO_EXTS[0]}});
+CONFIG.categories[0].logos=ALL; /* mushroom and microgreens */
+CONFIG.categories[1].logos=ALL; /* farm fresh family (same images) */
+
+/* ============ Languages ============ */
+let lang='en';
+const I18N={en:{brand:'Choose our logo',homeTitle:'Help us choose our logo',homeLead:'We are building a brand for fresh, home-grown produce. Look at two sets of logo concepts and pick the one you like best from each. It takes about a minute.',how1:'Choose one logo from each set',how2:'Lock your choice',how3:'Suggest a name, if you like',start:'Start choosing',c0t:'Mushroom and microgreens',c0s:'Logos made directly for our mushroom and microgreen products. Choose one.',c0n:'Concepts made only for our mushroom and microgreen products.',c1t:'The farm fresh family',c1s:'Logos for the wider group of farm fresh products. Choose one.',c1n:'Concepts for the wider group of farm fresh products we will offer.',hint:'Scroll or pinch to zoom. Drag to explore.',zin:'Zoom in',zout:'Zoom out',zfit:'Fit to screen',pickNone:'Tap a logo to choose it',picked:'You chose',lock:'Lock choice and continue',used:'Already chosen',finalTitle:'Almost done',finalSub:'Suggest a name if you have one. Everything here is optional.',bnameL:'Business name suggestion',opt:'(optional)',bnameP:'A name you would love to see',vnameL:'Your name',vnameP:'Leave blank to stay anonymous',change:'Change',submit:'Send my choices',sending:'Sending…',retry:'Couldn’t send. Try again',thx:'Thank you for your support',thxS:'Your choices have been received. Every opinion helps us shape a brand people will love. We truly appreciate your time.',s0:'Products',s1:'Group',s2:'Name',nf:'Image not found'},
+ml:{brand:'ലോഗോ തിരഞ്ഞെടുക്കാം',homeTitle:'ഞങ്ങളുടെ ലോഗോ തിരഞ്ഞെടുക്കാൻ സഹായിക്കൂ',homeLead:'വീട്ടിൽ വളർത്തിയ ഫ്രഷ് ഉൽപ്പന്നങ്ങൾക്കായി ഒരു ബ്രാൻഡ് ഒരുക്കുകയാണ് ഞങ്ങൾ. രണ്ട് വിഭാഗം ലോഗോ ആശയങ്ങൾ കണ്ട് ഓരോന്നിൽ നിന്നും നിങ്ങൾക്ക് ഏറ്റവും ഇഷ്ടമായ ഒന്ന് തിരഞ്ഞെടുക്കൂ. ഒരു മിനിറ്റ് മതി.',how1:'ഓരോ വിഭാഗത്തിൽ നിന്നും ഒരു ലോഗോ തിരഞ്ഞെടുക്കുക',how2:'തിരഞ്ഞെടുപ്പ് ലോക്ക് ചെയ്യുക',how3:'താൽപര്യമുണ്ടെങ്കിൽ ഒരു പേര് നിർദ്ദേശിക്കുക',start:'തിരഞ്ഞെടുക്കാൻ തുടങ്ങാം',c0t:'കൂൺ & മൈക്രോഗ്രീൻസ്',c0s:'ഞങ്ങളുടെ കൂൺ, മൈക്രോഗ്രീൻസ് ഉൽപ്പന്നങ്ങൾക്കായി മാത്രം ഒരുക്കിയ ലോഗോകൾ. ഒന്ന് തിരഞ്ഞെടുക്കുക.',c0n:'കൂൺ, മൈക്രോഗ്രീൻസ് ഉൽപ്പന്നങ്ങൾക്കായി മാത്രമുള്ള ലോഗോ ആശയങ്ങൾ.',c1t:'ഫാം ഫ്രഷ് കുടുംബം',c1s:'ഫാം ഫ്രഷ് ഉൽപ്പന്നങ്ങളുടെ മുഴുവൻ ഗ്രൂപ്പിനുമുള്ള ലോഗോകൾ. ഒന്ന് തിരഞ്ഞെടുക്കുക.',c1n:'ഞങ്ങൾ ഒരുക്കുന്ന ഫാം ഫ്രഷ് ഉൽപ്പന്നങ്ങളുടെ ഗ്രൂപ്പിനുള്ള ലോഗോ ആശയങ്ങൾ.',hint:'സൂം ചെയ്യാൻ സ്ക്രോൾ ചെയ്യുക അല്ലെങ്കിൽ പിഞ്ച് ചെയ്യുക. നീക്കി കാണാൻ വലിച്ചിടുക.',zin:'വലുതാക്കുക',zout:'ചെറുതാക്കുക',zfit:'സ്ക്രീനിന് ഒതുക്കുക',pickNone:'ഒരു ലോഗോ തൊട്ട് തിരഞ്ഞെടുക്കുക',picked:'നിങ്ങൾ തിരഞ്ഞെടുത്തത്',lock:'തിരഞ്ഞെടുപ്പ് ലോക്ക് ചെയ്ത് തുടരുക',used:'നേരത്തെ തിരഞ്ഞെടുത്തു',finalTitle:'ഏകദേശം കഴിഞ്ഞു',finalSub:'ബിസിനസ്സിന് ഒരു പേര് നിർദ്ദേശിക്കാനുണ്ടെങ്കിൽ എഴുതൂ. ഇതെല്ലാം ഓപ്ഷണലാണ്.',bnameL:'ബിസിനസ് പേര് നിർദ്ദേശം',opt:'(ഓപ്ഷണൽ)',bnameP:'നിങ്ങൾക്കിഷ്ടമുള്ള ഒരു പേര്',vnameL:'നിങ്ങളുടെ പേര്',vnameP:'അജ്ഞാതനായി തുടരാൻ ഒഴിച്ചിടുക',change:'മാറ്റുക',submit:'എന്റെ തിരഞ്ഞെടുപ്പുകൾ അയയ്ക്കുക',sending:'അയയ്ക്കുന്നു…',retry:'അയയ്ക്കാനായില്ല. വീണ്ടും ശ്രമിക്കുക',thx:'നിങ്ങളുടെ പിന്തുണയ്ക്ക് നന്ദി',thxS:'നിങ്ങളുടെ തിരഞ്ഞെടുപ്പുകൾ ഞങ്ങൾക്ക് ലഭിച്ചു. ഓരോ അഭിപ്രായവും ആളുകൾക്ക് ഇഷ്ടമാകുന്ന ഒരു ബ്രാൻഡ് രൂപപ്പെടുത്താൻ സഹായിക്കുന്നു. നിങ്ങളുടെ സമയത്തിന് ഹൃദയപൂർവം നന്ദി.',s0:'ഉൽപ്പന്നങ്ങൾ',s1:'ഗ്രൂപ്പ്',s2:'പേര്',nf:'ചിത്രം കണ്ടില്ല'}};
+const t=k=>I18N[lang][k];
+function applyLang(){
+  const q=(s,v)=>{const e=document.querySelector(s);if(e)e.textContent=v};
+  q('.brand',t('brand'));q('#v-home h1',t('homeTitle'));q('#v-home .lead',t('homeLead'));
+  [1,2,3].forEach(n=>q('#v-home .how li:nth-child('+n+')',t('how'+n)));
+  q('#start',t('start'));q('#v-final h1',t('finalTitle'));q('#v-final .sub',t('finalSub'));
+  document.querySelector('label[for=bname]').innerHTML=t('bnameL')+' <span>'+t('opt')+'</span>';
+  document.querySelector('label[for=vname]').innerHTML=t('vnameL')+' <span>'+t('opt')+'</span>';
+  document.getElementById('bname').placeholder=t('bnameP');document.getElementById('vname').placeholder=t('vnameP');
+  if(!document.getElementById('submit').disabled)q('#submit',t('submit'));
+  q('#hint',t('hint'));
+  [['zin','zin'],['zout','zout'],['zfit','zfit']].forEach(a=>document.getElementById(a[0]).setAttribute('aria-label',t(a[1])));
+  q('.thanks h1',t('thx'));q('.thanks .sub',t('thxS'));
+  document.getElementById('langBtn').textContent=lang==='en'?'മലയാളം':'English';
+  document.title=t('brand');
+}
+
+/* ============ Backend-ready storage layer ============
+   Payload shape is what your future database will store:
+   { selections:{product:"product-3", group:"group-1"}, businessName, voterName, submittedAt } */
+const Store={
+  async submit(payload){
+    if(!CONFIG.API_URL){ await new Promise(r=>setTimeout(r,700)); console.log("Submission (no backend yet):",payload); return {ok:true}; }
+    const res=await fetch(CONFIG.API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    return {ok:res.ok};
+  }
+};
+
+/* ============ App state ============ */
+const $=id=>document.getElementById(id);
+const state={step:0,sel:{},locked:{}};
+const cats=CONFIG.categories;
+const stage=$("stage"),plane=$("plane");
+const view={x:0,y:0,s:1,fit:1};
+
+function renderSteps(){
+  const labels=[t('s0'),t('s1'),t('s2')];
+  $("steps").innerHTML=labels.map((l,i)=>`<div class="step ${state.step===i?"on":""} ${(i<cats.length&&state.locked[cats[i].key])||state.step>i?"done":""}"><i></i><span>${l}</span></div>`).join("");
+}
+function show(id){state.view=id;document.querySelectorAll(".view").forEach(v=>v.classList.toggle("show",v.id===id))}
+
+function renderCat(){
+  const c=cats[state.step];
+  show("v-cat");renderSteps();
+  $("cTitle").textContent=t('c'+state.step+'t');$("cSub").textContent=t('c'+state.step+'s');
+  const locked=!!state.locked[c.key];
+  stage.classList.toggle("locked",locked);
+  plane.innerHTML=c.logos.map((l,i)=>`<div class="card ${state.sel[c.key]===l.id?'sel':''} ${isOff(c,l)?'off':''}" data-id="${l.id}" style="animation-delay:${Math.min(i*40,600)}ms"><div class="img"><img src="${l.src}" data-base="${l.base||''}" alt="${l.name}" draggable="false"></div>${isOff(c,l)?`<em class="badge">${t('used')}</em>`:''}<div class="cap"><span>${l.name}</span><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 5"/></svg></span></div></div>`).join("");
+  const ratio=stage.clientWidth/stage.clientHeight,cols=ratio>1.5?7:ratio>1?5:3;
+  plane.style.gridTemplateColumns='repeat('+cols+',260px)';
+  updatePick();
+  requestAnimationFrame(()=>{fit(false)});
+  $("hint").style.opacity=1;
+}
+function updatePick(){
+  const c=cats[state.step],id=state.sel[c.key],l=c.logos.find(x=>x.id===id);
+  $("pick").innerHTML=l?`${t('picked')} <b>${l.name}</b>`:t('pickNone');
+  $("lock").disabled=!l;
+  $("lock").textContent=t('lock');
+}
+function select(card,ev){
+  const c=cats[state.step];
+  if(state.locked[c.key]||card.classList.contains('off'))return;
+  state.sel[c.key]=card.dataset.id;
+  plane.querySelectorAll(".card").forEach(x=>x.classList.toggle("sel",x===card));
+  const r=card.getBoundingClientRect(),d=Math.max(r.width,r.height)*.5,rp=document.createElement("span");
+  rp.className="ripple";rp.style.cssText=`width:${d}px;height:${d}px;left:${(ev.clientX-r.left)/view.s-d/2/view.s}px;top:${(ev.clientY-r.top)/view.s-d/2/view.s}px`;
+  card.appendChild(rp);setTimeout(()=>rp.remove(),700);
+  updatePick();
+}
+$("lock").onclick=()=>{
+  const c=cats[state.step];state.locked[c.key]=true;
+  stage.classList.add("locked");
+  setTimeout(()=>{state.step++;state.step<cats.length?renderCat():renderFinal()},450);
+};
+function renderFinal(){
+  show("v-final");renderSteps();
+  $("recap").innerHTML=cats.map((c,i)=>{const l=c.logos.find(x=>x.id===state.sel[c.key]);return `<div><img src="${l.src}" data-base="${l.base||''}" alt="${l.name}"><small>${t('c'+i+'t')}</small><b>${l.name}</b><br><a data-edit="${i}" tabindex="0">${t('change')}</a></div>`}).join("");
+  $("recap").querySelectorAll("[data-edit]").forEach(a=>a.onclick=()=>{const i=+a.dataset.edit;state.locked[cats[i].key]=false;if(i===0){delete state.sel[cats[1].key];state.locked[cats[1].key]=false}state.step=i;renderCat()});
+}
+$("submit").onclick=async()=>{
+  const b=$("submit");b.disabled=true;b.textContent=t('sending');
+  const payload={selections:{...state.sel},language:lang,businessName:$("bname").value.trim(),voterName:$("vname").value.trim(),submittedAt:new Date().toISOString()};
+  try{const r=await Store.submit(payload);if(!r.ok)throw 0;show("v-done");$("steps").innerHTML=""}
+  catch(e){b.disabled=false;b.textContent=t('retry')}
+};
+
+/* ============ Zoom and pan (the whole container moves together) ============ */
+function apply(smooth){
+  plane.classList.toggle("smooth",!!smooth);
+  plane.style.transform=`translate(${view.x}px,${view.y}px) scale(${view.s})`;
+}
+function fit(smooth=true){
+  const sw=stage.clientWidth,sh=stage.clientHeight,cw=plane.offsetWidth,ch=plane.offsetHeight;
+  view.fit=Math.min(sw/cw,sh/ch,1.2);view.s=view.fit;
+  view.x=(sw-cw*view.s)/2;view.y=(sh-ch*view.s)/2;apply(smooth);
+}
+function zoomAt(cx,cy,f,smooth){
+  const ns=Math.min(Math.max(view.s*f,view.fit*.6),5);
+  view.x=cx-(cx-view.x)*(ns/view.s);view.y=cy-(cy-view.y)*(ns/view.s);view.s=ns;apply(smooth);
+}
+const center=()=>[stage.clientWidth/2,stage.clientHeight/2];
+$("zin").onclick=()=>zoomAt(...center(),1.35,true);
+$("zout").onclick=()=>zoomAt(...center(),1/1.35,true);
+$("zfit").onclick=()=>fit(true);
+window.addEventListener("resize",()=>{if($("v-cat").classList.contains("show"))fit(false)});
+stage.addEventListener("wheel",e=>{e.preventDefault();const r=stage.getBoundingClientRect();zoomAt(e.clientX-r.left,e.clientY-r.top,Math.exp(-e.deltaY*.0015),false);$("hint").style.opacity=0},{passive:false});
+
+const ptrs=new Map();let drag=false,pinched=false,start=null,downEl=null,lastDist=0;
+stage.addEventListener("pointerdown",e=>{
+  if(e.target.closest(".tools"))return;
+  ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size===1){start={x:e.clientX,y:e.clientY};drag=false;pinched=false;downEl=e.target.closest(".card")}
+  if(ptrs.size===2){pinched=true;const [a,b]=[...ptrs.values()];lastDist=Math.hypot(a.x-b.x,a.y-b.y)}
+});
+stage.addEventListener("pointermove",e=>{
+  const p=ptrs.get(e.pointerId);if(!p)return;
+  const dx=e.clientX-p.x,dy=e.clientY-p.y;
+  if(ptrs.size===2){
+    p.x=e.clientX;p.y=e.clientY;
+    const [a,b]=[...ptrs.values()],d=Math.hypot(a.x-b.x,a.y-b.y),r=stage.getBoundingClientRect();
+    if(lastDist)zoomAt((a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top,d/lastDist,false);
+    lastDist=d;$("hint").style.opacity=0;return;
+  }
+  if(!drag&&Math.hypot(e.clientX-start.x,e.clientY-start.y)>6){drag=true;stage.setPointerCapture(e.pointerId);stage.classList.add("grabbing");$("hint").style.opacity=0}
+  if(drag){view.x+=dx;view.y+=dy;apply(false)}
+  p.x=e.clientX;p.y=e.clientY;
+});
+function up(e){
+  if(!ptrs.has(e.pointerId))return;
+  ptrs.delete(e.pointerId);stage.classList.remove("grabbing");
+  if(e.type==="pointerup"&&!drag&&!pinched&&downEl&&ptrs.size===0)select(downEl,e);
+  if(ptrs.size===0){downEl=null}
+}
+stage.addEventListener("pointerup",up);stage.addEventListener("pointercancel",up);
+
+function renderHome(){
+  show("v-home");$("steps").innerHTML="";
+  const side=["l","r"];
+  $("duo").innerHTML=cats.map((c,i)=>`<div class="panel ${side[i]}"><h2>${t('c'+i+'t')}</h2><p>${t('c'+i+'n')}</p><div class="thumbs">${c.logos.slice(0,5).map(l=>`<img src="${l.src}" data-base="${l.base||''}" alt="${l.name}">`).join("")}</div></div>`).join("");
+}
+$("start").onclick=()=>renderCat();
+const isOff=(c,l)=>c!==cats[0]&&state.sel[cats[0].key]===l.id;
+function setLang(l){
+  lang=l;document.documentElement.lang=l;applyLang();$('langBtn').style.display='';
+  if(state.view==='v-lang'||state.view==='v-home')renderHome();
+  else if(state.view==='v-cat')renderCat();
+  else if(state.view==='v-final')renderFinal();
+}
+$('langBtn').onclick=()=>setLang(lang==='en'?'ml':'en');
+$('pickEn').onclick=()=>setLang('en');
+$('pickMl').onclick=()=>setLang('ml');
+/* try the next file extension when a logo image fails to load */
+document.addEventListener('error',e=>{
+  const im=e.target;if(!im||im.tagName!=='IMG')return;
+  const b=im.dataset.base;
+  if(b){const k=(+im.dataset.k||0)+1;if(k<LOGO_EXTS.length){im.dataset.k=k;im.src=b+'.'+LOGO_EXTS[k];return}}
+  const s=document.createElement('span');s.textContent=t('nf');s.style.cssText='color:#66736b;font-size:12px;text-align:center';
+  im.replaceWith(s);
+},true);
+show('v-lang');
+</script>
+</body>
+</html>
