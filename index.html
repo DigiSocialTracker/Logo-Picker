@@ -83,8 +83,8 @@ h1{font:400 clamp(24px,3.4vw,36px)/1.15 Fraunces,Georgia,serif;margin:0}
 .recap a{color:var(--moss);cursor:pointer;font-size:13px;text-decoration:underline}
 label{display:block;font-size:14px;margin-bottom:6px}
 label span{color:var(--muted)}
-input{width:100%;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:500 15px Manrope,sans-serif;transition:border-color .3s,box-shadow .3s}
-input:focus{outline:0;border-color:var(--brass);box-shadow:0 0 0 4px color-mix(in srgb,var(--brass) 25%,transparent)}
+input,textarea{width:100%;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:500 15px Manrope,sans-serif;transition:border-color .3s,box-shadow .3s;resize:vertical}
+input:focus,textarea:focus{outline:0;border-color:var(--brass);box-shadow:0 0 0 4px color-mix(in srgb,var(--brass) 25%,transparent)}
 .thanks{margin:auto;text-align:center;max-width:420px}
 .thanks svg{width:72px;height:72px;stroke:var(--moss);stroke-width:2.5;fill:none;stroke-dasharray:90;stroke-dashoffset:90;animation:draw 1s .2s forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
@@ -147,6 +147,7 @@ html[lang=ml] *{font-family:'Noto Sans Malayalam',Manrope,system-ui,sans-serif!i
       <div class="recap" id="recap"></div>
       <div><label for="bname">Business name suggestion <span>(optional)</span></label><input id="bname" maxlength="60" placeholder="A name you would love to see"></div>
       <div><label for="vname">Your name <span>(optional)</span></label><input id="vname" maxlength="60" placeholder="Leave blank to stay anonymous"></div>
+      <div><label for="remarks">Remarks <span>(optional)</span></label><textarea id="remarks" rows="2" maxlength="300" placeholder="Any thoughts or feedback on the logos"></textarea></div>
       <button class="btn" id="submit">Send my choices</button>
     </div></div>
   </section>
@@ -197,8 +198,8 @@ CONFIG.categories[1].logos=ALL; /* farm fresh family (same images) */
 
 /* ============ Languages ============ */
 let lang='en';
-const I18N={en:{brand:'Choose our logo',homeTitle:'Help us choose our logo',homeLead:'We are building a brand for fresh, home-grown produce. Look at two sets of logo concepts and pick the one you like best from each. It takes about a minute.',how1:'Choose one logo from each set',how2:'Lock your choice',how3:'Suggest a name, if you like',start:'Start choosing',c0t:'Mushroom and microgreens',c0s:'Logos made directly for our mushroom and microgreen products. Choose one.',c0n:'Concepts made only for our mushroom and microgreen products.',c1t:'The farm fresh family',c1s:'Logos for the wider group of farm fresh products. Choose one.',c1n:'Concepts for the wider group of farm fresh products we will offer.',hint:'Scroll or pinch to zoom. Drag to explore.',zin:'Zoom in',zout:'Zoom out',zfit:'Fit to screen',pickNone:'Tap a logo to choose it',picked:'You chose',lock:'Lock choice and continue',used:'Already chosen',finalTitle:'Almost done',finalSub:'Suggest a name if you have one. Everything here is optional.',bnameL:'Business name suggestion',opt:'(optional)',bnameP:'A name you would love to see',vnameL:'Your name',vnameP:'Leave blank to stay anonymous',change:'Change',submit:'Send my choices',sending:'Sending…',retry:'Couldn’t send. Try again',thx:'Thank you for your support',thxS:'Your choices have been received. Every opinion helps us shape a brand people will love. We truly appreciate your time.',s0:'Products',s1:'Group',s2:'Name',nf:'Image not found'},
-ml:{brand:'ലോഗോ തിരഞ്ഞെടുക്കാം',homeTitle:'ഞങ്ങളുടെ ലോഗോ തിരഞ്ഞെടുക്കാൻ സഹായിക്കൂ',homeLead:'വീട്ടിൽ വളർത്തിയ ഫ്രഷ് ഉൽപ്പന്നങ്ങൾക്കായി ഒരു ബ്രാൻഡ് ഒരുക്കുകയാണ് ഞങ്ങൾ. രണ്ട് വിഭാഗം ലോഗോ ആശയങ്ങൾ കണ്ട് ഓരോന്നിൽ നിന്നും നിങ്ങൾക്ക് ഏറ്റവും ഇഷ്ടമായ ഒന്ന് തിരഞ്ഞെടുക്കൂ. ഒരു മിനിറ്റ് മതി.',how1:'ഓരോ വിഭാഗത്തിൽ നിന്നും ഒരു ലോഗോ തിരഞ്ഞെടുക്കുക',how2:'തിരഞ്ഞെടുപ്പ് ലോക്ക് ചെയ്യുക',how3:'താൽപര്യമുണ്ടെങ്കിൽ ഒരു പേര് നിർദ്ദേശിക്കുക',start:'തിരഞ്ഞെടുക്കാൻ തുടങ്ങാം',c0t:'കൂൺ & മൈക്രോഗ്രീൻസ്',c0s:'ഞങ്ങളുടെ കൂൺ, മൈക്രോഗ്രീൻസ് ഉൽപ്പന്നങ്ങൾക്കായി മാത്രം ഒരുക്കിയ ലോഗോകൾ. ഒന്ന് തിരഞ്ഞെടുക്കുക.',c0n:'കൂൺ, മൈക്രോഗ്രീൻസ് ഉൽപ്പന്നങ്ങൾക്കായി മാത്രമുള്ള ലോഗോ ആശയങ്ങൾ.',c1t:'ഫാം ഫ്രഷ് കുടുംബം',c1s:'ഫാം ഫ്രഷ് ഉൽപ്പന്നങ്ങളുടെ മുഴുവൻ ഗ്രൂപ്പിനുമുള്ള ലോഗോകൾ. ഒന്ന് തിരഞ്ഞെടുക്കുക.',c1n:'ഞങ്ങൾ ഒരുക്കുന്ന ഫാം ഫ്രഷ് ഉൽപ്പന്നങ്ങളുടെ ഗ്രൂപ്പിനുള്ള ലോഗോ ആശയങ്ങൾ.',hint:'സൂം ചെയ്യാൻ സ്ക്രോൾ ചെയ്യുക അല്ലെങ്കിൽ പിഞ്ച് ചെയ്യുക. നീക്കി കാണാൻ വലിച്ചിടുക.',zin:'വലുതാക്കുക',zout:'ചെറുതാക്കുക',zfit:'സ്ക്രീനിന് ഒതുക്കുക',pickNone:'ഒരു ലോഗോ തൊട്ട് തിരഞ്ഞെടുക്കുക',picked:'നിങ്ങൾ തിരഞ്ഞെടുത്തത്',lock:'തിരഞ്ഞെടുപ്പ് ലോക്ക് ചെയ്ത് തുടരുക',used:'നേരത്തെ തിരഞ്ഞെടുത്തു',finalTitle:'ഏകദേശം കഴിഞ്ഞു',finalSub:'ബിസിനസ്സിന് ഒരു പേര് നിർദ്ദേശിക്കാനുണ്ടെങ്കിൽ എഴുതൂ. ഇതെല്ലാം ഓപ്ഷണലാണ്.',bnameL:'ബിസിനസ് പേര് നിർദ്ദേശം',opt:'(ഓപ്ഷണൽ)',bnameP:'നിങ്ങൾക്കിഷ്ടമുള്ള ഒരു പേര്',vnameL:'നിങ്ങളുടെ പേര്',vnameP:'അജ്ഞാതനായി തുടരാൻ ഒഴിച്ചിടുക',change:'മാറ്റുക',submit:'എന്റെ തിരഞ്ഞെടുപ്പുകൾ അയയ്ക്കുക',sending:'അയയ്ക്കുന്നു…',retry:'അയയ്ക്കാനായില്ല. വീണ്ടും ശ്രമിക്കുക',thx:'നിങ്ങളുടെ പിന്തുണയ്ക്ക് നന്ദി',thxS:'നിങ്ങളുടെ തിരഞ്ഞെടുപ്പുകൾ ഞങ്ങൾക്ക് ലഭിച്ചു. ഓരോ അഭിപ്രായവും ആളുകൾക്ക് ഇഷ്ടമാകുന്ന ഒരു ബ്രാൻഡ് രൂപപ്പെടുത്താൻ സഹായിക്കുന്നു. നിങ്ങളുടെ സമയത്തിന് ഹൃദയപൂർവം നന്ദി.',s0:'ഉൽപ്പന്നങ്ങൾ',s1:'ഗ്രൂപ്പ്',s2:'പേര്',nf:'ചിത്രം കണ്ടില്ല'}};
+const I18N={en:{brand:'Choose our logo',homeTitle:'Help us choose our logo',homeLead:'We are building a brand for fresh, home-grown produce. Look at two sets of logo concepts and pick the one you like best from each. It takes about a minute.',how1:'Choose one logo from each set',how2:'Lock your choice',how3:'Suggest a name, if you like',start:'Start choosing',c0t:'Mushroom and microgreens',c0s:'Logos made directly for our mushroom and microgreen products. Choose one.',c0n:'Concepts made only for our mushroom and microgreen products.',c1t:'The farm fresh family',c1s:'Logos for the wider group of farm fresh products. Choose one.',c1n:'Concepts for the wider group of farm fresh products we will offer.',hint:'Scroll or pinch to zoom. Drag to explore.',zin:'Zoom in',zout:'Zoom out',zfit:'Fit to screen',pickNone:'Tap a logo to choose it',picked:'You chose',lock:'Lock choice and continue',used:'Already chosen',finalTitle:'Almost done',finalSub:'Suggest a name if you have one. Everything here is optional.',bnameL:'Business name suggestion',opt:'(optional)',bnameP:'A name you would love to see',vnameL:'Your name',vnameP:'Leave blank to stay anonymous',remL:'Remarks',remP:'Any thoughts or feedback on the logos',change:'Change',submit:'Send my choices',sending:'Sending…',retry:'Couldn’t send. Try again',thx:'Thank you for your support',thxS:'Your choices have been received. Every opinion helps us shape a brand people will love. We truly appreciate your time.',s0:'Products',s1:'Group',s2:'Name',nf:'Image not found'},
+ml:{brand:'ലോഗോ തിരഞ്ഞെടുക്കാം',homeTitle:'ഞങ്ങളുടെ ലോഗോ തിരഞ്ഞെടുക്കാൻ സഹായിക്കൂ',homeLead:'വീട്ടിൽ വളർത്തിയ ഫ്രഷ് ഉൽപ്പന്നങ്ങൾക്കായി ഒരു ബ്രാൻഡ് ഒരുക്കുകയാണ് ഞങ്ങൾ. രണ്ട് വിഭാഗം ലോഗോ ആശയങ്ങൾ കണ്ട് ഓരോന്നിൽ നിന്നും നിങ്ങൾക്ക് ഏറ്റവും ഇഷ്ടമായ ഒന്ന് തിരഞ്ഞെടുക്കൂ. ഒരു മിനിറ്റ് മതി.',how1:'ഓരോ വിഭാഗത്തിൽ നിന്നും ഒരു ലോഗോ തിരഞ്ഞെടുക്കുക',how2:'തിരഞ്ഞെടുപ്പ് ലോക്ക് ചെയ്യുക',how3:'താൽപര്യമുണ്ടെങ്കിൽ ഒരു പേര് നിർദ്ദേശിക്കുക',start:'തിരഞ്ഞെടുക്കാൻ തുടങ്ങാം',c0t:'കൂൺ & മൈക്രോഗ്രീൻസ്',c0s:'ഞങ്ങളുടെ കൂൺ, മൈക്രോഗ്രീൻസ് ഉൽപ്പന്നങ്ങൾക്കായി മാത്രം ഒരുക്കിയ ലോഗോകൾ. ഒന്ന് തിരഞ്ഞെടുക്കുക.',c0n:'കൂൺ, മൈക്രോഗ്രീൻസ് ഉൽപ്പന്നങ്ങൾക്കായി മാത്രമുള്ള ലോഗോ ആശയങ്ങൾ.',c1t:'ഫാം ഫ്രഷ് കുടുംബം',c1s:'ഫാം ഫ്രഷ് ഉൽപ്പന്നങ്ങളുടെ മുഴുവൻ ഗ്രൂപ്പിനുമുള്ള ലോഗോകൾ. ഒന്ന് തിരഞ്ഞെടുക്കുക.',c1n:'ഞങ്ങൾ ഒരുക്കുന്ന ഫാം ഫ്രഷ് ഉൽപ്പന്നങ്ങളുടെ ഗ്രൂപ്പിനുള്ള ലോഗോ ആശയങ്ങൾ.',hint:'സൂം ചെയ്യാൻ സ്ക്രോൾ ചെയ്യുക അല്ലെങ്കിൽ പിഞ്ച് ചെയ്യുക. നീക്കി കാണാൻ വലിച്ചിടുക.',zin:'വലുതാക്കുക',zout:'ചെറുതാക്കുക',zfit:'സ്ക്രീനിന് ഒതുക്കുക',pickNone:'ഒരു ലോഗോ തൊട്ട് തിരഞ്ഞെടുക്കുക',picked:'നിങ്ങൾ തിരഞ്ഞെടുത്തത്',lock:'തിരഞ്ഞെടുപ്പ് ലോക്ക് ചെയ്ത് തുടരുക',used:'നേരത്തെ തിരഞ്ഞെടുത്തു',finalTitle:'ഏകദേശം കഴിഞ്ഞു',finalSub:'ബിസിനസ്സിന് ഒരു പേര് നിർദ്ദേശിക്കാനുണ്ടെങ്കിൽ എഴുതൂ. ഇതെല്ലാം ഓപ്ഷണലാണ്.',bnameL:'ബിസിനസ് പേര് നിർദ്ദേശം',opt:'(ഓപ്ഷണൽ)',bnameP:'നിങ്ങൾക്കിഷ്ടമുള്ള ഒരു പേര്',vnameL:'നിങ്ങളുടെ പേര്',vnameP:'അജ്ഞാതനായി തുടരാൻ ഒഴിച്ചിടുക',remL:'അഭിപ്രായങ്ങൾ',remP:'ലോഗോകളെക്കുറിച്ചുള്ള നിങ്ങളുടെ അഭിപ്രായം എഴുതൂ',change:'മാറ്റുക',submit:'എന്റെ തിരഞ്ഞെടുപ്പുകൾ അയയ്ക്കുക',sending:'അയയ്ക്കുന്നു…',retry:'അയയ്ക്കാനായില്ല. വീണ്ടും ശ്രമിക്കുക',thx:'നിങ്ങളുടെ പിന്തുണയ്ക്ക് നന്ദി',thxS:'നിങ്ങളുടെ തിരഞ്ഞെടുപ്പുകൾ ഞങ്ങൾക്ക് ലഭിച്ചു. ഓരോ അഭിപ്രായവും ആളുകൾക്ക് ഇഷ്ടമാകുന്ന ഒരു ബ്രാൻഡ് രൂപപ്പെടുത്താൻ സഹായിക്കുന്നു. നിങ്ങളുടെ സമയത്തിന് ഹൃദയപൂർവം നന്ദി.',s0:'ഉൽപ്പന്നങ്ങൾ',s1:'ഗ്രൂപ്പ്',s2:'പേര്',nf:'ചിത്രം കണ്ടില്ല'}};
 const t=k=>I18N[lang][k];
 function applyLang(){
   const q=(s,v)=>{const e=document.querySelector(s);if(e)e.textContent=v};
@@ -207,7 +208,8 @@ function applyLang(){
   q('#start',t('start'));q('#v-final h1',t('finalTitle'));q('#v-final .sub',t('finalSub'));
   document.querySelector('label[for=bname]').innerHTML=t('bnameL')+' <span>'+t('opt')+'</span>';
   document.querySelector('label[for=vname]').innerHTML=t('vnameL')+' <span>'+t('opt')+'</span>';
-  document.getElementById('bname').placeholder=t('bnameP');document.getElementById('vname').placeholder=t('vnameP');
+  document.querySelector('label[for=remarks]').innerHTML=t('remL')+' <span>'+t('opt')+'</span>';
+  document.getElementById('bname').placeholder=t('bnameP');document.getElementById('vname').placeholder=t('vnameP');document.getElementById('remarks').placeholder=t('remP');
   if(!document.getElementById('submit').disabled)q('#submit',t('submit'));
   q('#hint',t('hint'));
   [['zin','zin'],['zout','zout'],['zfit','zfit']].forEach(a=>document.getElementById(a[0]).setAttribute('aria-label',t(a[1])));
@@ -248,6 +250,7 @@ const Store={
       group_logo: payload.selections.group,
       business_name: payload.businessName||null,
       voter_name: payload.voterName||null,
+      remarks: payload.remarks||null,
       language: payload.language,
       vote_source: VOTE_SOURCE,
       user_ip: userIp,
@@ -324,7 +327,7 @@ function renderFinal(){
 }
 $("submit").onclick=async()=>{
   const b=$("submit");b.disabled=true;b.textContent=t('sending');
-  const payload={selections:{...state.sel},language:lang,businessName:$("bname").value.trim(),voterName:$("vname").value.trim(),submittedAt:new Date().toISOString()};
+  const payload={selections:{...state.sel},language:lang,businessName:$("bname").value.trim(),voterName:$("vname").value.trim(),remarks:$("remarks").value.trim(),submittedAt:new Date().toISOString()};
   try{const r=await Store.submit(payload);if(!r.ok)throw 0;show("v-done");$("steps").innerHTML=""}
   catch(e){b.disabled=false;b.textContent=t('retry')}
 };
