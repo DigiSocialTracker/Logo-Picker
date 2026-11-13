@@ -1,4 +1,12 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Choose our logo</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Manrope:wght@400;500;600&family=Noto+Sans+Malayalam:wght@400;500;600&family=Noto+Serif+Malayalam:wght@500;600;700&display=swap"><style>:root{
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Choose our logo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Manrope:wght@400;500;600&family=Noto+Sans+Malayalam:wght@400;500;600&family=Noto+Serif+Malayalam:wght@500;600;700&display=swap">
+<style>
+:root{
   --bg:#e8ece6;--panel:#f4f6f1;--ink:#15221c;--muted:#66736b;--line:#cfd7cc;
   --moss:#2f5d3a;--brass:#b8935a;--card:#fbfaf6;--shadow:0 10px 30px rgba(21,34,28,.10);
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
@@ -89,7 +97,9 @@ input:focus,textarea:focus{outline:0;border-color:var(--brass);box-shadow:0 0 0 
 .thanks svg{width:72px;height:72px;stroke:var(--moss);stroke-width:2.5;fill:none;stroke-dasharray:90;stroke-dashoffset:90;animation:draw 1s .2s forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
 .homewrap{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:10px 4px calc(76px + env(safe-area-inset-bottom,0px))}
-.lead{max-width:540px;margin:0 auto 12px;line-height:1.65}
+.hero-row{display:flex;align-items:center;justify-content:center;gap:28px;width:min(760px,100%);margin:0 auto 10px;text-align:left}
+.hero-img{width:170px;max-width:34%;height:auto;object-fit:contain;flex-shrink:0;border-radius:16px;filter:drop-shadow(0 12px 20px rgba(21,34,28,.12))}
+.lead{max-width:520px;margin:0;line-height:1.65;text-align:left}
 .once-note{max-width:540px;margin:0 auto;background:color-mix(in srgb,var(--brass) 13%,var(--panel));border:1px solid color-mix(in srgb,var(--brass) 45%,var(--line));color:var(--ink);border-radius:14px;padding:11px 16px;font-size:13.5px;line-height:1.55}
 .how{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;list-style:none;margin:0;padding:0;counter-reset:s}
 .how li{counter-increment:s;display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 16px 8px 8px;font-size:14px}
@@ -112,6 +122,9 @@ html[lang=ml] h1{line-height:1.38}
 #steps:empty{display:none}
 @media (max-width:640px){
   .duo{grid-template-columns:1fr}
+  .hero-row{flex-direction:column-reverse;text-align:center;gap:16px;margin-bottom:4px}
+  .lead{max-width:540px;text-align:center}
+  .hero-img{width:150px;max-width:55%;margin:0 auto}
   header{display:grid;grid-template-columns:1fr auto;align-items:center;row-gap:10px;padding:20px 22px 12px}
   .hdr-right{display:contents}
   .brand{grid-column:1;grid-row:1}
@@ -128,4 +141,338 @@ html[lang=ml] h1{line-height:1.38}
   .pick{font-size:13px;line-height:1.35}
   .step span{display:none}
 }
-@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}</style><header><div class="brand">Choose our logo</div><div class="hdr-right"><div class="steps" id="steps"></div><button class="btn ghost" id="langBtn" style="padding:7px 14px;font-size:13px;display:none"></button></div></header><main><section class="view" id="v-lang"><div class="homewrap" style="justify-content:center"><h1>Choose your language</h1><p class="sub" style="margin:0">ഭാഷ തിരഞ്ഞെടുക്കുക<div class="langs"><button class="btn" id="pickEn">English</button><button class="btn" id="pickMl">മലയാളം</button></div></div></section><section class="view" id="v-home"><div class="homewrap"><h1>Help us choose our logo</h1><p class="sub lead">We’re launching a modern hi-tech farm right here in our hometown—starting with fresh gourmet mushrooms, followed soon by microgreens and a wider range of clean, tech-grown vegetables. Before we finalize our brand identity, we’d love your input. The designs below are early rough concepts; once your votes decide the favorites, we’ll professionally refine and polish the winning logos. Take a minute to pick your top choice from each set and be part of our journey!<ol class="how"><li>Choose one logo from each set<li>Lock your choice<li>Suggest a name, if you like</ol><div class="duo" id="duo"></div><p class="once-note" id="onceNote">Note: You can submit your choices only once. Once you click Submit, your vote is permanently recorded and cannot be changed.</p><button class="btn" id="start">Start choosing</button></div></section><section class="view" id="v-cat"><div class="title"><div><h1 id="cTitle"></h1><p class="sub" id="cSub"></div></div><div class="stage" id="stage"><div class="plane" id="plane"></div><div class="hint" id="hint">Scroll or pinch to zoom. Drag to explore.</div><div class="tools"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button><button id="zfit" aria-label="Fit to screen" title="Fit">⤢</button></div></div><div class="bar"><div class="pick" id="pick"></div><button class="btn" id="lock" disabled>Lock choice</button></div></section><section class="view" id="v-final"><div class="title"><div><h1>Almost done</h1><p class="sub">Suggest a name if you have one. Everything here is optional.</div></div><div class="final"><div class="sheet"><div class="recap" id="recap"></div><div><label for="vname">Your name <span>(optional)</span></label><input id="vname" maxlength="60" placeholder="Leave blank to stay anonymous"></div><div><label for="remarks">Remarks <span>(optional)</span></label><textarea id="remarks" maxlength="300" placeholder="Any thoughts or feedback on the logos"></textarea></div><div class="name-box"><h3 id="bnameTitle">Suggest a Business Name</h3><p id="bnameDesc">Have a fresh, memorable name in mind for our hi-tech farm and produce brand? Share your suggestion below—it’s completely optional, so feel free to leave it blank if you’d like.</p><input id="bname" maxlength="60" placeholder="A name you would love to see (optional)"></div><button class="btn" id="submit">Send my choices</button></div></div></section><section class="view" id="v-done"><div class="thanks"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="22"/><path d="M15 27l8 8 14-16"/></svg><h1 style="margin-top:18px">Thank you for your support</h1><p class="sub">Your choices have been received. Every opinion helps us shape a brand people will love. We truly appreciate your time.</div></section></main><script>const CONFIG={SUPABASE_URL:"https://miwdddkkaohdgpqkywps.supabase.co",SUPABASE_ANON_KEY:"sb_publishable_jVw0GUUlCQXYHDUcwbasLw_TsyWMFG5",STORAGE_KEY:"logo_picker_completed_v1",categories:[{key:"product",title:"Mushroom and microgreens",sub:"Logos made directly for our mushroom and microgreen products. Choose one.",logos:[]},{key:"group",title:"The farm fresh family",sub:"Logos for the wider group of farm fresh products. Choose one.",logos:[]}]},G="#2f5d3a",L="#7fae5a",B="#8a5a3b",S="#eadfc8",T=(e,t=17)=>`<text x="120" y="184" text-anchor="middle" font-family="Georgia,serif" font-size="${t}" letter-spacing="3" fill="#25342b">${e}</text>`,leaf=(e,t,o,a=L)=>`<path transform="translate(${e} ${t}) rotate(${o})" d="M0 0c-16-4-24-14-24-26 16 0 26 10 24 26z" fill="${a}"/>`,svg=e=>"data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200">${e}</svg>`),S1=[["Sprout Cap",`<path d="M60 112a60 55 0 0 1 120 0z" fill="${B}"/><rect x="105" y="112" width="30" height="42" rx="13" fill="${S}"/><path d="M120 60V44" stroke="${G}" stroke-width="4"/>${leaf(120,46,0)}${leaf(120,46,0).replace("rotate(0)","rotate(0) scale(-1 1)")}${T("SPROUT CAP")}`],["Gill and Leaf",`<circle cx="120" cy="92" r="64" fill="none" stroke="${G}" stroke-width="3"/><path d="M80 104a40 34 0 0 1 80 0z" fill="${B}"/><rect x="108" y="104" width="24" height="26" rx="9" fill="${S}"/>${leaf(156,82,35)}${T("GILL &amp; LEAF")}`],["Spore",`<path d="M70 108a50 44 0 0 1 100 0z" fill="none" stroke="${G}" stroke-width="4"/><path d="M104 108v30q0 12 16 12t16-12v-30" fill="none" stroke="${G}" stroke-width="4"/><path d="M120 64V48" stroke="${G}" stroke-width="3"/>${leaf(120,52,0)}<circle cx="96" cy="94" r="3" fill="${L}"/><circle cx="120" cy="86" r="3" fill="${L}"/><circle cx="144" cy="94" r="3" fill="${L}"/>${T("SPORE",19)}`],["Micro Mycelia",`<path d="M120 22c50 20 62 70 0 124-62-54-50-104 0-124z" fill="${L}"/><path d="M92 104a28 24 0 0 1 56 0z" fill="#fff" opacity=".92"/><rect x="112" y="104" width="16" height="24" rx="6" fill="#fff" opacity=".92"/>${T("MICRO MYCELIA",15)}`],["Cap and Cotyledon",`<circle cx="92" cy="60" r="3" fill="${L}"/><circle cx="148" cy="56" r="3" fill="${L}"/><circle cx="120" cy="40" r="3" fill="${L}"/><path d="M72 112a48 42 0 0 1 96 0z" fill="#3b2a20"/><rect x="106" y="112" width="28" height="30" rx="11" fill="${S}"/>${leaf(104,150,-20)}${leaf(136,150,20).replace("rotate(20)","rotate(20) scale(-1 1)")}${T("CAP &amp; COTYLEDON",14)}`]],S2=[["Sun Rows",`<circle cx="120" cy="72" r="32" fill="#e0a63a"/><g fill="none" stroke="${G}" stroke-width="4" stroke-linecap="round"><path d="M40 118q80-30 160 0"/><path d="M40 136q80-30 160 0"/><path d="M40 154q80-30 160 0"/></g>${T("SUN ROWS")}`],["Golden Grain",`<circle cx="120" cy="90" r="66" fill="none" stroke="${B}" stroke-width="3"/><path d="M120 150V46" stroke="${B}" stroke-width="3"/>${[58,80,102].map(e=>`<ellipse cx="106" cy="${e}" rx="6" ry="13" transform="rotate(-28 106 ${e})" fill="#d3a44a"/><ellipse cx="134" cy="${e}" rx="6" ry="13" transform="rotate(28 134 ${e})" fill="#d3a44a"/>`).join("")}${T("GOLDEN GRAIN")}`],["Fresh Basket",`<path d="M82 90a38 38 0 0 1 76 0" fill="none" stroke="${B}" stroke-width="5"/><circle cx="104" cy="82" r="14" fill="#c4452f"/><circle cx="134" cy="80" r="13" fill="${L}"/><circle cx="120" cy="68" r="12" fill="#e08a2e"/><path d="M62 94h116l-14 54H76z" fill="${B}"/>${T("FRESH BASKET")}`],["Pure Roots",`<path d="M120 24c34 40 44 62 44 82a44 44 0 0 1-88 0c0-20 10-42 44-82z" fill="${G}"/><path d="M120 132V78" stroke="#fff" stroke-width="3"/><path d="M120 108c-14 0-20-8-20-18 14 0 20 6 20 18zM120 96c14 0 20-8 20-18-14 0-20 6-20 18z" fill="#fff"/><path d="M104 150q16 14 32 0" stroke="${B}" stroke-width="3" fill="none"/>${T("PURE ROOTS")}`],["Hex Mark",`<polygon points="120,18 178,50 178,114 120,146 62,114 62,50" fill="${G}"/><text x="120" y="102" text-anchor="middle" font-family="Georgia,serif" font-size="62" fill="#fff">F</text>${T("FARM &amp; CO.",15)}`]],LOGO_BASE="https://rmoosa2014.github.io/Restaurant-menu/Mushroom/",LOGO_EXTS=["png","jpg","jpeg","webp","svg"],ALL=Array.from({length:21},(e,t)=>{const o="LG"+String(t+1).padStart(3,"0");return{id:o,name:o,base:LOGO_BASE+o,src:LOGO_BASE+o+"."+LOGO_EXTS[0]}});CONFIG.categories[0].logos=ALL,CONFIG.categories[1].logos=ALL;let lang="en";const I18N={en:{brand:"Choose our logo",homeTitle:"Help us choose our logo",homeLead:"We’re launching a modern hi-tech farm right here in our hometown—starting with fresh gourmet mushrooms, followed soon by microgreens and a wider range of clean, tech-grown vegetables. Before we finalize our brand identity, we’d love your input. The designs below are early rough concepts; once your votes decide the favorites, we’ll professionally refine and polish the winning logos. Take a minute to pick your top choice from each set and be part of our journey!",how1:"Choose one logo from each set",how2:"Lock your choice",how3:"Suggest a name, if you like",onceNote:"Note: You can submit your choices only once. Once you click Submit, your vote is permanently recorded and cannot be changed.",start:"Start choosing",c0t:"Mushroom and microgreens",c0s:"Logos made directly for our mushroom and microgreen products. Choose one.",c0n:"Concepts made only for our mushroom and microgreen products.",c1t:"The farm fresh family",c1s:"Logos for the wider group of farm fresh products. Choose one.",c1n:"Concepts for the wider group of farm fresh products we will offer.",hint:"Scroll or pinch to zoom. Drag to explore.",zin:"Zoom in",zout:"Zoom out",zfit:"Fit to screen",pickNone:"Tap a logo to choose it",picked:"You chose",lock:"Lock choice and continue",used:"Already chosen",finalTitle:"Almost done",finalSub:"Add your details or feedback below if you’d like. Everything here is optional.",bnameTitle:"Suggest a Business Name",bnameDesc:"Have a fresh, memorable name in mind for our hi-tech farm and produce brand? Share your suggestion below—it’s completely optional, so feel free to leave it blank if you’d like.",opt:"(optional)",bnameP:"A name you would love to see (optional)",vnameL:"Your name",vnameP:"Leave blank to stay anonymous",remL:"Remarks",remP:"Any thoughts or feedback on the logos",change:"Change",submit:"Send my choices",sending:"Sending…",retry:"Couldn’t send. Try again",thx:"Thank you for your support",thxS:"Your choices have been received. Every opinion helps us shape a brand people will love. We truly appreciate your time.",s0:"Products",s1:"Group",s2:"Name",nf:"Image not found"},ml:{brand:"ലോഗോ തിരഞ്ഞെടുക്കാം",homeTitle:"ലോഗോ തിരഞ്ഞെടുക്കാൻ സഹായിക്കാമോ?",homeLead:"നമ്മുടെ സ്വന്തം നാട്ടിൽ ഒരു ആധുനിക ഹൈടെക് ഫാം ആരംഭിക്കുകയാണ് ഞങ്ങൾ—ആദ്യഘട്ടമായി ഫ്രഷ് കൂൺ ഉൽപ്പാദനവും, തുടർന്ന് മൈക്രോഗ്രീൻസും, ഭാവിയിൽ കൂടുതൽ ഹൈടെക് പച്ചക്കറികളും വിപണിയിലെത്തിക്കാനാണ് ഞങ്ങളുടെ ലക്ഷ്യം. ഞങ്ങളുടെ ബ്രാൻഡ് ലോഗോ തിരഞ്ഞെടുക്കാൻ നിങ്ങളുടെ വിലയേറിയ അഭിപ്രായം ഞങ്ങൾ ക്ഷണിക്കുന്നു. താഴെ നൽകിയിരിക്കുന്നത് പ്രാഥമിക ലോഗോ ആശയങ്ങൾ മാത്രമാണ്; നിങ്ങളുടെ വോട്ടുകളിലൂടെ തിരഞ്ഞെടുക്കപ്പെടുന്ന മികച്ച ലോഗോ ഞങ്ങൾ കൂടുതൽ മനോഹരമായി ഡിസൈൻ ചെയ്തെടുക്കും. ഒരു മിനിറ്റ് മാറ്റി വെച്ച് ഓരോ വിഭാഗത്തിൽ നിന്നും നിങ്ങൾക്ക് ഏറ്റവും ഇഷ്ടപ്പെട്ട ലോഗോ തിരഞ്ഞെടുത്ത് ഞങ്ങളുടെ ഈ സംരംഭത്തിന്റെ ഭാഗമാകൂ!",how1:"ഓരോ വിഭാഗത്തിൽ നിന്നും ഒരു ലോഗോ തിരഞ്ഞെടുക്കുക",how2:"തിരഞ്ഞെടുപ്പ് ലോക്ക് ചെയ്യുക",how3:"താൽപര്യമുണ്ടെങ്കിൽ ഒരു പേര് നിർദ്ദേശിക്കുക",onceNote:"ശ്രദ്ധിക്കുക: നിങ്ങൾക്ക് ഒരിക്കൽ മാത്രമേ വോട്ട് രേഖപ്പെടുത്താൻ സാധിക്കൂ. സബ്മിറ്റ് ക്ലിക്ക് ചെയ്തു കഴിഞ്ഞാൽ തിരഞ്ഞെടുപ്പുകൾ സ്ഥിരമായി രേഖപ്പെടുത്തുന്നതും പിന്നീട് മാറ്റാൻ സാധിക്കാത്തതുമാണ്.",start:"തിരഞ്ഞെടുക്കാൻ തുടങ്ങാം",c0t:"കൂൺ & മൈക്രോഗ്രീൻസ്",c0s:"ഞങ്ങളുടെ കൂൺ, മൈക്രോഗ്രീൻസ് ഉൽപ്പന്നങ്ങൾക്കായി മാത്രം ഒരുക്കിയ ലോഗോകൾ. ഒന്ന് തിരഞ്ഞെടുക്കുക.",c0n:"കൂൺ, മൈക്രോഗ്രീൻസ് ഉൽപ്പന്നങ്ങൾക്കായി മാത്രമുള്ള ലോഗോ ആശയങ്ങൾ.",c1t:"ഫാം ഫ്രഷ് ഗ്രൂപ്പിന് വേണ്ടി",c1s:"ഫാം ഫ്രഷ് ഉൽപ്പന്നങ്ങളുടെ മുഴുവൻ ഗ്രൂപ്പിനുമുള്ള ലോഗോകൾ. ഒന്ന് തിരഞ്ഞെടുക്കുക.",c1n:"ഞങ്ങൾ ഒരുക്കുന്ന ഫാം ഫ്രഷ് ഉൽപ്പന്നങ്ങളുടെ ഗ്രൂപ്പിനുള്ള ലോഗോ ആശയങ്ങൾ.",hint:"സൂം ചെയ്യാൻ സ്ക്രോൾ ചെയ്യുക അല്ലെങ്കിൽ പിഞ്ച് ചെയ്യുക. നീക്കി കാണാൻ വലിച്ചിടുക.",zin:"വലുതാക്കുക",zout:"ചെറുതാക്കുക",zfit:"സ്ക്രീനിന് ഒതുക്കുക",pickNone:"ഒരു ലോഗോ തൊട്ട് തിരഞ്ഞെടുക്കുക",picked:"നിങ്ങൾ തിരഞ്ഞെടുത്തത്",lock:"തിരഞ്ഞെടുപ്പ് ലോക്ക് ചെയ്ത് തുടരുക",used:"നേരത്തെ തിരഞ്ഞെടുത്തു",finalTitle:"ഏകദേശം കഴിഞ്ഞു",finalSub:"നിങ്ങളുടെ പേരോ അഭിപ്രായങ്ങളോ താഴെ എഴുതാം. ഇതെല്ലാം ഓപ്ഷണലാണ്.",bnameTitle:"ബിസിനസ്സിന് ഒരു പേര് നിർദ്ദേശിക്കൂ",bnameDesc:"ഞങ്ങളുടെ ഹൈടെക് ഫാമിനും ഫ്രഷ് ഉൽപ്പന്നങ്ങൾക്കും അനുയോജ്യമായ, മനസ്സിൽ തങ്ങുന്ന ഒരു പേര് നിർദ്ദേശിക്കാനുണ്ടോ? താൽപ്പര്യമുണ്ടെങ്കിൽ താഴെ എഴുതാം—ഇത് പൂർണ്ണമായും ഓപ്ഷണലാണ്.",opt:"(ഓപ്ഷണൽ)",bnameP:"നിങ്ങൾക്കിഷ്ടമുള്ള ഒരു പേര് (ഓപ്ഷണൽ)",vnameL:"നിങ്ങളുടെ പേര്",vnameP:"താൽപര്യമില്ലെങ്കിൽ പേര് നൽകേണ്ടതില്ല ",remL:"അഭിപ്രായങ്ങൾ",remP:"ലോഗോകളെക്കുറിച്ചുള്ള നിങ്ങളുടെ അഭിപ്രായം എഴുതൂ",change:"മാറ്റുക",submit:"എന്റെ തിരഞ്ഞെടുപ്പുകൾ അയയ്ക്കുക",sending:"അയയ്ക്കുന്നു…",retry:"അയയ്ക്കാനായില്ല. വീണ്ടും ശ്രമിക്കുക",thx:"നിങ്ങളുടെ പിന്തുണയ്ക്ക് നന്ദി",thxS:"നിങ്ങളുടെ അഭിപ്രായങ്ങൾ ഞങ്ങൾക്ക് ലഭിച്ചു. ഓരോ അഭിപ്രായവും ആളുകൾക്ക് ഇഷ്ടമാകുന്ന ഒരു ബ്രാൻഡ് രൂപപ്പെടുത്താൻ സഹായിക്കുന്നു. നിങ്ങളുടെ സമയത്തിന് ഹൃദയപൂർവം നന്ദി.",s0:"ഉൽപ്പന്നങ്ങൾ",s1:"ഗ്രൂപ്പ്",s2:"പേര്",nf:"ചിത്രം കണ്ടില്ല"}},t=e=>I18N[lang][e];function applyLang(){const e=(e,t)=>{const o=document.querySelector(e);o&&(o.textContent=t)};e(".brand",t("brand")),e("#v-home h1",t("homeTitle")),e("#v-home .lead",t("homeLead")),e("#onceNote",t("onceNote")),[1,2,3].forEach(o=>e("#v-home .how li:nth-child("+o+")",t("how"+o))),e("#start",t("start")),e("#v-final h1",t("finalTitle")),e("#v-final .sub",t("finalSub")),e("#bnameTitle",t("bnameTitle")),e("#bnameDesc",t("bnameDesc")),document.querySelector("label[for=vname]").innerHTML=t("vnameL")+" <span>"+t("opt")+"</span>",document.querySelector("label[for=remarks]").innerHTML=t("remL")+" <span>"+t("opt")+"</span>",document.getElementById("bname").placeholder=t("bnameP"),document.getElementById("vname").placeholder=t("vnameP"),document.getElementById("remarks").placeholder=t("remP"),document.getElementById("submit").disabled||e("#submit",t("submit")),e("#hint",t("hint")),[["zin","zin"],["zout","zout"],["zfit","zfit"]].forEach(e=>document.getElementById(e[0]).setAttribute("aria-label",t(e[1]))),e(".thanks h1",t("thx")),e(".thanks .sub",t("thxS")),document.getElementById("langBtn").textContent="en"===lang?"മലയാളം":"English",document.title=t("brand")}const VOTE_SOURCE=(()=>{const e=new URLSearchParams(window.location.search);return(e.get("src")||e.get("ref")||"direct").trim().toLowerCase().slice(0,40)})(),Store={hasSubmitted(){try{return null!==localStorage.getItem(CONFIG.STORAGE_KEY)}catch(e){return!1}},async getUserIP(){try{const e=new AbortController,t=setTimeout(()=>e.abort(),2500),o=await fetch("https://api.ipify.org?format=json",{signal:e.signal});clearTimeout(t);return(await o.json()).ip||"unknown"}catch(e){return"unavailable"}},getBrowserDefaults(){let e="unknown";try{e=Intl.DateTimeFormat().resolvedOptions().timeZone||"unknown"}catch(e){}return{timezone:e,browser_locale:navigator.language||"unknown",device_type:/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||"")?"Mobile":"Desktop"}},async submit(e){if(this.hasSubmitted())return{ok:!0};(CONFIG.SUPABASE_URL||"").trim().replace(/\/+$/,""),(CONFIG.SUPABASE_ANON_KEY||"").trim();const t=await this.getUserIP(),o=this.getBrowserDefaults(),a={product_logo:e.selections.product,group_logo:e.selections.group,business_name:e.businessName||null,voter_name:e.voterName||null,remarks:e.remarks||null,language:e.language,vote_source:VOTE_SOURCE,user_ip:t,timezone:o.timezone,browser_locale:o.browser_locale,device_type:o.device_type,submitted_at:e.submittedAt},n=await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/logo_votes`,{method:"POST",headers:{apikey:CONFIG.SUPABASE_ANON_KEY,Authorization:`Bearer ${CONFIG.SUPABASE_ANON_KEY}`,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify(a)});if(n.ok)try{localStorage.setItem(CONFIG.STORAGE_KEY,JSON.stringify({submittedAt:e.submittedAt,language:e.language}))}catch(e){}return{ok:n.ok}}},$=e=>document.getElementById(e),state={step:0,sel:{},locked:{}},cats=CONFIG.categories,stage=$("stage"),plane=$("plane"),view={x:0,y:0,s:1,fit:1};function renderSteps(){const e=[t("s0"),t("s1"),t("s2")];$("steps").innerHTML=e.map((e,t)=>`<div class="step ${state.step===t?"on":""} ${t<cats.length&&state.locked[cats[t].key]||state.step>t?"done":""}"><i></i><span>${e}</span></div>`).join("")}function show(e){state.view=e,document.querySelectorAll(".view").forEach(t=>t.classList.toggle("show",t.id===e))}function renderCat(){const e=cats[state.step];show("v-cat"),renderSteps(),$("cTitle").textContent=t("c"+state.step+"t"),$("cSub").textContent=t("c"+state.step+"s");const o=!!state.locked[e.key];stage.classList.toggle("locked",o),plane.innerHTML=e.logos.map((o,a)=>`<div class="card ${state.sel[e.key]===o.id?"sel":""} ${isOff(e,o)?"off":""}" data-id="${o.id}" style="animation-delay:${Math.min(40*a,600)}ms"><div class="img"><img src="${o.src}" data-base="${o.base||""}" alt="${o.name}" draggable="false"></div>${isOff(e,o)?`<em class="badge">${t("used")}</em>`:""}<div class="cap"><span>${o.name}</span><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 5"/></svg></span></div></div>`).join("");const a=window.innerWidth<=640,n=stage.clientWidth/stage.clientHeight,s=a?4:n>1.5?7:n>1?5:3;plane.style.gridTemplateColumns="repeat("+s+",260px)",updatePick(),requestAnimationFrame(()=>{fit(!1)}),$("hint").style.opacity=1}function updatePick(){const e=cats[state.step],o=state.sel[e.key],a=e.logos.find(e=>e.id===o);$("pick").innerHTML=a?`${t("picked")} <b>${a.name}</b>`:t("pickNone"),$("lock").disabled=!a,$("lock").textContent=t("lock")}function select(e,t){const o=cats[state.step];if(state.locked[o.key]||e.classList.contains("off"))return;state.sel[o.key]=e.dataset.id,plane.querySelectorAll(".card").forEach(t=>t.classList.toggle("sel",t===e));const a=e.getBoundingClientRect(),n=.5*Math.max(a.width,a.height),s=document.createElement("span");s.className="ripple",s.style.cssText=`width:${n}px;height:${n}px;left:${(t.clientX-a.left)/view.s-n/2/view.s}px;top:${(t.clientY-a.top)/view.s-n/2/view.s}px`,e.appendChild(s),setTimeout(()=>s.remove(),700),updatePick()}function renderFinal(){show("v-final"),renderSteps(),$("recap").innerHTML=cats.map((e,o)=>{const a=e.logos.find(t=>t.id===state.sel[e.key]);return`<div><img src="${a.src}" data-base="${a.base||""}" alt="${a.name}"><small>${t("c"+o+"t")}</small><b>${a.name}</b><br><a data-edit="${o}" tabindex="0">${t("change")}</a></div>`}).join(""),$("recap").querySelectorAll("[data-edit]").forEach(e=>e.onclick=()=>{const t=+e.dataset.edit;state.locked[cats[t].key]=!1,0===t&&(delete state.sel[cats[1].key],state.locked[cats[1].key]=!1),state.step=t,renderCat()})}function apply(e){plane.classList.toggle("smooth",!!e),plane.style.transform=`translate(${view.x}px,${view.y}px) scale(${view.s})`}function fit(e=!0){const t=stage.clientWidth,o=stage.clientHeight,a=plane.offsetWidth,n=plane.offsetHeight;view.fit=Math.min(t/a,o/n,1.2),view.s=view.fit,view.x=(t-a*view.s)/2,view.y=(o-n*view.s)/2,apply(e)}function zoomAt(e,t,o,a){const n=Math.min(Math.max(view.s*o,.6*view.fit),5);view.x=e-(e-view.x)*(n/view.s),view.y=t-(t-view.y)*(n/view.s),view.s=n,apply(a)}$("lock").onclick=()=>{const e=cats[state.step];state.locked[e.key]=!0,stage.classList.add("locked"),setTimeout(()=>{state.step++,state.step<cats.length?renderCat():renderFinal()},450)},$("submit").onclick=async()=>{const e=$("submit");e.disabled=!0,e.textContent=t("sending");const o={selections:{...state.sel},language:lang,businessName:$("bname").value.trim(),voterName:$("vname").value.trim(),remarks:$("remarks").value.trim(),submittedAt:(new Date).toISOString()};try{if(!(await Store.submit(o)).ok)throw 0;show("v-done"),$("steps").innerHTML=""}catch(o){e.disabled=!1,e.textContent=t("retry")}};const center=()=>[stage.clientWidth/2,stage.clientHeight/2];$("zin").onclick=()=>zoomAt(...center(),1.35,!0),$("zout").onclick=()=>zoomAt(...center(),1/1.35,!0),$("zfit").onclick=()=>fit(!0),window.addEventListener("resize",()=>{$("v-cat").classList.contains("show")&&fit(!1)}),stage.addEventListener("wheel",e=>{e.preventDefault();const t=stage.getBoundingClientRect();zoomAt(e.clientX-t.left,e.clientY-t.top,Math.exp(.0015*-e.deltaY),!1),$("hint").style.opacity=0},{passive:!1});const ptrs=new Map;let drag=!1,pinched=!1,start=null,downEl=null,lastDist=0;function up(e){ptrs.has(e.pointerId)&&(ptrs.delete(e.pointerId),stage.classList.remove("grabbing"),"pointerup"!==e.type||drag||pinched||!downEl||0!==ptrs.size||select(downEl,e),0===ptrs.size&&(downEl=null))}function renderHome(){show("v-home"),$("steps").innerHTML="";const e=["l","r"];$("duo").innerHTML=cats.map((o,a)=>`<div class="panel ${e[a]}"><h2>${t("c"+a+"t")}</h2><p>${t("c"+a+"n")}</p><div class="thumbs">${o.logos.slice(0,5).map(e=>`<img src="${e.src}" data-base="${e.base||""}" alt="${e.name}">`).join("")}</div></div>`).join("")}stage.addEventListener("pointerdown",e=>{if(!e.target.closest(".tools")&&(ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY}),1===ptrs.size&&(start={x:e.clientX,y:e.clientY},drag=!1,pinched=!1,downEl=e.target.closest(".card")),2===ptrs.size)){pinched=!0;const[e,t]=[...ptrs.values()];lastDist=Math.hypot(e.x-t.x,e.y-t.y)}}),stage.addEventListener("pointermove",e=>{const t=ptrs.get(e.pointerId);if(!t)return;const o=e.clientX-t.x,a=e.clientY-t.y;if(2===ptrs.size){t.x=e.clientX,t.y=e.clientY;const[o,a]=[...ptrs.values()],n=Math.hypot(o.x-a.x,o.y-a.y),s=stage.getBoundingClientRect();return lastDist&&zoomAt((o.x+a.x)/2-s.left,(o.y+a.y)/2-s.top,n/lastDist,!1),lastDist=n,void($("hint").style.opacity=0)}!drag&&Math.hypot(e.clientX-start.x,e.clientY-start.y)>6&&(drag=!0,stage.setPointerCapture(e.pointerId),stage.classList.add("grabbing"),$("hint").style.opacity=0),drag&&(view.x+=o,view.y+=a,apply(!1)),t.x=e.clientX,t.y=e.clientY}),stage.addEventListener("pointerup",up),stage.addEventListener("pointercancel",up),$("start").onclick=()=>renderCat();const isOff=(e,t)=>e!==cats[0]&&state.sel[cats[0].key]===t.id;function setLang(e){if(lang=e,document.documentElement.lang=e,applyLang(),$("langBtn").style.display="",Store.hasSubmitted())return show("v-done"),void($("steps").innerHTML="");"v-lang"===state.view||"v-home"===state.view?renderHome():"v-cat"===state.view?renderCat():"v-final"===state.view&&renderFinal()}if($("langBtn").onclick=()=>setLang("en"===lang?"ml":"en"),$("pickEn").onclick=()=>setLang("en"),$("pickMl").onclick=()=>setLang("ml"),document.addEventListener("error",e=>{const o=e.target;if(!o||"IMG"!==o.tagName)return;const a=o.dataset.base;if(a){const e=(+o.dataset.k||0)+1;if(e<LOGO_EXTS.length)return o.dataset.k=e,void(o.src=a+"."+LOGO_EXTS[e])}const n=document.createElement("span");n.textContent=t("nf"),n.style.cssText="color:#66736b;font-size:12px;text-align:center",o.replaceWith(n)},!0),Store.hasSubmitted()){try{const e=JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)||"{}");e.language&&(lang=e.language)}catch(e){}document.documentElement.lang=lang,applyLang(),$("langBtn").style.display="",$("steps").innerHTML="",show("v-done")}else show("v-lang")</script>
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Choose our logo</div>
+  <div class="hdr-right"><div class="steps" id="steps"></div><button class="btn ghost" id="langBtn" style="padding:7px 14px;font-size:13px;display:none"></button></div>
+</header>
+<main>
+  <section class="view" id="v-lang">
+    <div class="homewrap" style="justify-content:center">
+      <h1>Choose your language</h1>
+      <p class="sub" style="margin:0">ഭാഷ തിരഞ്ഞെടുക്കുക</p>
+      <div class="langs"><button class="btn" id="pickEn">English</button><button class="btn" id="pickMl">മലയാളം</button></div>
+    </div>
+  </section>
+  <section class="view" id="v-home">
+    <div class="homewrap">
+      <h1>Help us choose our logo</h1>
+      <div class="hero-row">
+        <img class="hero-img" src="https://rmoosa2014.github.io/Restaurant-menu/Mushroom/Grow-bag.png" alt="Mushroom grow bag">
+        <p class="sub lead">We’re launching a modern hi-tech farm right here in our hometown—starting with fresh gourmet mushrooms, followed soon by microgreens and a wider range of clean, tech-grown vegetables. Before we finalize our brand identity, we’d love your input. The designs below are early rough concepts; once your votes decide the favorites, we’ll professionally refine and polish the winning logos. Take a minute to pick your top choice from each set and be part of our journey!</p>
+      </div>
+      <ol class="how"><li>Choose one logo from each set</li><li>Lock your choice</li><li>Suggest a name, if you like</li></ol>
+      <div class="duo" id="duo"></div>
+      <p class="once-note" id="onceNote">Note: You can submit your choices only once. Once you click Submit, your vote is permanently recorded and cannot be changed.</p>
+      <button class="btn" id="start">Start choosing</button>
+    </div>
+  </section>
+  <section class="view" id="v-cat">
+    <div class="title"><div><h1 id="cTitle"></h1><p class="sub" id="cSub"></p></div></div>
+    <div class="stage" id="stage">
+      <div class="plane" id="plane"></div>
+      <div class="hint" id="hint">Scroll or pinch to zoom. Drag to explore.</div>
+      <div class="tools"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">&minus;</button><button id="zfit" aria-label="Fit to screen" title="Fit">&#x2922;</button></div>
+    </div>
+    <div class="bar"><div class="pick" id="pick"></div><button class="btn" id="lock" disabled>Lock choice</button></div>
+  </section>
+  <section class="view" id="v-final">
+    <div class="title"><div><h1>Almost done</h1><p class="sub">Suggest a name if you have one. Everything here is optional.</p></div></div>
+    <div class="final"><div class="sheet">
+      <div class="recap" id="recap"></div>
+      <div><label for="vname">Your name <span>(optional)</span></label><input id="vname" maxlength="60" placeholder="Leave blank to stay anonymous"></div>
+      <div><label for="remarks">Remarks <span>(optional)</span></label><textarea id="remarks" rows="2" maxlength="300" placeholder="Any thoughts or feedback on the logos"></textarea></div>
+      <div class="name-box">
+        <h3 id="bnameTitle">Suggest a Business Name</h3>
+        <p id="bnameDesc">Have a fresh, memorable name in mind for our hi-tech farm and produce brand? Share your suggestion below—it’s completely optional, so feel free to leave it blank if you’d like.</p>
+        <input id="bname" maxlength="60" placeholder="A name you would love to see (optional)">
+      </div>
+      <button class="btn" id="submit">Send my choices</button>
+    </div></div>
+  </section>
+  <section class="view" id="v-done">
+    <div class="thanks"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="22"/><path d="M15 27l8 8 14-16"/></svg>
+    <h1 style="margin-top:18px">Thank you for your support</h1><p class="sub">Your choices have been received. Every opinion helps us shape a brand people will love. We truly appreciate your time.</p></div>
+  </section>
+</main>
+
+<script>
+/* ============ CONFIG: edit here ============
+   Each logo: { id (keep stable for future vote counts), name, src (image URL or data URI) }
+   To use your own designs, replace src with a link. Add or remove items freely. */
+const CONFIG = {
+  SUPABASE_URL: "https://miwdddkkaohdgpqkywps.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_jVw0GUUlCQXYHDUcwbasLw_TsyWMFG5",
+  STORAGE_KEY: "logo_picker_completed_v1",
+  categories: [
+    { key:"product", title:"Mushroom and microgreens", sub:"Logos made directly for our mushroom and microgreen products. Choose one.", logos:[] },
+    { key:"group",   title:"The farm fresh family",    sub:"Logos for the wider group of farm fresh products. Choose one.", logos:[] }
+  ]
+};
+/* ---- free sample logos (inline SVG so they work offline) ---- */
+const G="#2f5d3a",L="#7fae5a",B="#8a5a3b",S="#eadfc8";
+const T=(s,f=17)=>`<text x="120" y="184" text-anchor="middle" font-family="Georgia,serif" font-size="${f}" letter-spacing="3" fill="#25342b">${s}</text>`;
+const leaf=(x,y,r,c=L)=>`<path transform="translate(${x} ${y}) rotate(${r})" d="M0 0c-16-4-24-14-24-26 16 0 26 10 24 26z" fill="${c}"/>`;
+const svg=b=>"data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200">${b}</svg>`);
+const S1=[
+ ["Sprout Cap",`<path d="M60 112a60 55 0 0 1 120 0z" fill="${B}"/><rect x="105" y="112" width="30" height="42" rx="13" fill="${S}"/><path d="M120 60V44" stroke="${G}" stroke-width="4"/>${leaf(120,46,0)}${leaf(120,46,0).replace("rotate(0)","rotate(0) scale(-1 1)")}${T("SPROUT CAP")}`],
+ ["Gill and Leaf",`<circle cx="120" cy="92" r="64" fill="none" stroke="${G}" stroke-width="3"/><path d="M80 104a40 34 0 0 1 80 0z" fill="${B}"/><rect x="108" y="104" width="24" height="26" rx="9" fill="${S}"/>${leaf(156,82,35)}${T("GILL &amp; LEAF")}`],
+ ["Spore",`<path d="M70 108a50 44 0 0 1 100 0z" fill="none" stroke="${G}" stroke-width="4"/><path d="M104 108v30q0 12 16 12t16-12v-30" fill="none" stroke="${G}" stroke-width="4"/><path d="M120 64V48" stroke="${G}" stroke-width="3"/>${leaf(120,52,0)}<circle cx="96" cy="94" r="3" fill="${L}"/><circle cx="120" cy="86" r="3" fill="${L}"/><circle cx="144" cy="94" r="3" fill="${L}"/>${T("SPORE",19)}`],
+ ["Micro Mycelia",`<path d="M120 22c50 20 62 70 0 124-62-54-50-104 0-124z" fill="${L}"/><path d="M92 104a28 24 0 0 1 56 0z" fill="#fff" opacity=".92"/><rect x="112" y="104" width="16" height="24" rx="6" fill="#fff" opacity=".92"/>${T("MICRO MYCELIA",15)}`],
+ ["Cap and Cotyledon",`<circle cx="92" cy="60" r="3" fill="${L}"/><circle cx="148" cy="56" r="3" fill="${L}"/><circle cx="120" cy="40" r="3" fill="${L}"/><path d="M72 112a48 42 0 0 1 96 0z" fill="#3b2a20"/><rect x="106" y="112" width="28" height="30" rx="11" fill="${S}"/>${leaf(104,150,-20)}${leaf(136,150,20).replace("rotate(20)","rotate(20) scale(-1 1)")}${T("CAP &amp; COTYLEDON",14)}`]
+];
+const S2=[
+ ["Sun Rows",`<circle cx="120" cy="72" r="32" fill="#e0a63a"/><g fill="none" stroke="${G}" stroke-width="4" stroke-linecap="round"><path d="M40 118q80-30 160 0"/><path d="M40 136q80-30 160 0"/><path d="M40 154q80-30 160 0"/></g>${T("SUN ROWS")}`],
+ ["Golden Grain",`<circle cx="120" cy="90" r="66" fill="none" stroke="${B}" stroke-width="3"/><path d="M120 150V46" stroke="${B}" stroke-width="3"/>${[58,80,102].map(y=>`<ellipse cx="106" cy="${y}" rx="6" ry="13" transform="rotate(-28 106 ${y})" fill="#d3a44a"/><ellipse cx="134" cy="${y}" rx="6" ry="13" transform="rotate(28 134 ${y})" fill="#d3a44a"/>`).join("")}${T("GOLDEN GRAIN")}`],
+ ["Fresh Basket",`<path d="M82 90a38 38 0 0 1 76 0" fill="none" stroke="${B}" stroke-width="5"/><circle cx="104" cy="82" r="14" fill="#c4452f"/><circle cx="134" cy="80" r="13" fill="${L}"/><circle cx="120" cy="68" r="12" fill="#e08a2e"/><path d="M62 94h116l-14 54H76z" fill="${B}"/>${T("FRESH BASKET")}`],
+ ["Pure Roots",`<path d="M120 24c34 40 44 62 44 82a44 44 0 0 1-88 0c0-20 10-42 44-82z" fill="${G}"/><path d="M120 132V78" stroke="#fff" stroke-width="3"/><path d="M120 108c-14 0-20-8-20-18 14 0 20 6 20 18zM120 96c14 0 20-8 20-18-14 0-20 6-20 18z" fill="#fff"/><path d="M104 150q16 14 32 0" stroke="${B}" stroke-width="3" fill="none"/>${T("PURE ROOTS")}`],
+ ["Hex Mark",`<polygon points="120,18 178,50 178,114 120,146 62,114 62,50" fill="${G}"/><text x="120" y="102" text-anchor="middle" font-family="Georgia,serif" font-size="62" fill="#fff">F</text>${T("FARM &amp; CO.",15)}`]
+];
+/* ---- your 21 logos on GitHub: LG001 to LG021 (extension is auto-detected from this list) ---- */
+const LOGO_BASE='https://rmoosa2014.github.io/Restaurant-menu/Mushroom/';
+const LOGO_EXTS=['png','jpg','jpeg','webp','svg'];
+const ALL=Array.from({length:21},(_,i)=>{const n='LG'+String(i+1).padStart(3,'0');return{id:n,name:n,base:LOGO_BASE+n,src:LOGO_BASE+n+'.'+LOGO_EXTS[0]}});
+CONFIG.categories[0].logos=ALL; /* mushroom and microgreens */
+CONFIG.categories[1].logos=ALL; /* farm fresh family (same images) */
+
+/* ============ Languages ============ */
+let lang='en';
+const I18N={en:{brand:'Choose our logo',homeTitle:'Help us choose our logo',homeLead:'We’re launching a modern hi-tech farm right here in our hometown—starting with fresh gourmet mushrooms, followed soon by microgreens and a wider range of clean, tech-grown vegetables. Before we finalize our brand identity, we’d love your input. The designs below are early rough concepts; once your votes decide the favorites, we’ll professionally refine and polish the winning logos. Take a minute to pick your top choice from each set and be part of our journey!',how1:'Choose one logo from each set',how2:'Lock your choice',how3:'Suggest a name, if you like',onceNote:'Note: You can submit your choices only once. Once you click Submit, your vote is permanently recorded and cannot be changed.',start:'Start choosing',c0t:'Mushroom and microgreens',c0s:'Logos made directly for our mushroom and microgreen products. Choose one.',c0n:'Concepts made only for our mushroom and microgreen products.',c1t:'The farm fresh family',c1s:'Logos for the wider group of farm fresh products. Choose one.',c1n:'Concepts for the wider group of farm fresh products we will offer.',hint:'Scroll or pinch to zoom. Drag to explore.',zin:'Zoom in',zout:'Zoom out',zfit:'Fit to screen',pickNone:'Tap a logo to choose it',picked:'You chose',lock:'Lock choice and continue',used:'Already chosen',finalTitle:'Almost done',finalSub:'Add your details or feedback below if you’d like. Everything here is optional.',bnameTitle:'Suggest a Business Name',bnameDesc:'Have a fresh, memorable name in mind for our hi-tech farm and produce brand? Share your suggestion below—it’s completely optional, so feel free to leave it blank if you’d like.',opt:'(optional)',bnameP:'A name you would love to see (optional)',vnameL:'Your name',vnameP:'Leave blank to stay anonymous',remL:'Remarks',remP:'Any thoughts or feedback on the logos',change:'Change',submit:'Send my choices',sending:'Sending…',retry:'Couldn’t send. Try again',thx:'Thank you for your support',thxS:'Your choices have been received. Every opinion helps us shape a brand people will love. We truly appreciate your time.',s0:'Products',s1:'Group',s2:'Name',nf:'Image not found'},
+ml:{brand:'ലോഗോ തിരഞ്ഞെടുക്കാം',homeTitle:'ലോഗോ തിരഞ്ഞെടുക്കാൻ സഹായിക്കാമോ?',homeLead:'നമ്മുടെ സ്വന്തം നാട്ടിൽ ഒരു ആധുനിക ഹൈടെക് ഫാം ആരംഭിക്കുകയാണ് ഞങ്ങൾ—ആദ്യഘട്ടമായി ഫ്രഷ് കൂൺ ഉൽപ്പാദനവും, തുടർന്ന് മൈക്രോഗ്രീൻസും, ഭാവിയിൽ കൂടുതൽ ഹൈടെക് പച്ചക്കറികളും വിപണിയിലെത്തിക്കാനാണ് ഞങ്ങളുടെ ലക്ഷ്യം. ഞങ്ങളുടെ ബ്രാൻഡ് ലോഗോ തിരഞ്ഞെടുക്കാൻ നിങ്ങളുടെ വിലയേറിയ അഭിപ്രായം ഞങ്ങൾ ക്ഷണിക്കുന്നു. താഴെ നൽകിയിരിക്കുന്നത് പ്രാഥമിക ലോഗോ ആശയങ്ങൾ മാത്രമാണ്; നിങ്ങളുടെ വോട്ടുകളിലൂടെ തിരഞ്ഞെടുക്കപ്പെടുന്ന മികച്ച ലോഗോ ഞങ്ങൾ കൂടുതൽ മനോഹരമായി ഡിസൈൻ ചെയ്തെടുക്കും. ഒരു മിനിറ്റ് മാറ്റി വെച്ച് ഓരോ വിഭാഗത്തിൽ നിന്നും നിങ്ങൾക്ക് ഏറ്റവും ഇഷ്ടപ്പെട്ട ലോഗോ തിരഞ്ഞെടുത്ത് ഞങ്ങളുടെ ഈ സംരംഭത്തിന്റെ ഭാഗമാകൂ!',how1:'ഓരോ വിഭാഗത്തിൽ നിന്നും ഒരു ലോഗോ തിരഞ്ഞെടുക്കുക',how2:'തിരഞ്ഞെടുപ്പ് ലോക്ക് ചെയ്യുക',how3:'താൽപര്യമുണ്ടെങ്കിൽ ഒരു പേര് നിർദ്ദേശിക്കുക',onceNote:'ശ്രദ്ധിക്കുക: നിങ്ങൾക്ക് ഒരിക്കൽ മാത്രമേ വോട്ട് രേഖപ്പെടുത്താൻ സാധിക്കൂ. സബ്മിറ്റ് ക്ലിക്ക് ചെയ്തു കഴിഞ്ഞാൽ തിരഞ്ഞെടുപ്പുകൾ സ്ഥിരമായി രേഖപ്പെടുത്തുന്നതും പിന്നീട് മാറ്റാൻ സാധിക്കാത്തതുമാണ്.',start:'തിരഞ്ഞെടുക്കാൻ തുടങ്ങാം',c0t:'കൂൺ & മൈക്രോഗ്രീൻസ്',c0s:'ഞങ്ങളുടെ കൂൺ, മൈക്രോഗ്രീൻസ് ഉൽപ്പന്നങ്ങൾക്കായി മാത്രം ഒരുക്കിയ ലോഗോകൾ. ഒന്ന് തിരഞ്ഞെടുക്കുക.',c0n:'കൂൺ, മൈക്രോഗ്രീൻസ് ഉൽപ്പന്നങ്ങൾക്കായി മാത്രമുള്ള ലോഗോ ആശയങ്ങൾ.',c1t:'ഫാം ഫ്രഷ് ഗ്രൂപ്പിന് വേണ്ടി',c1s:'ഫാം ഫ്രഷ് ഉൽപ്പന്നങ്ങളുടെ മുഴുവൻ ഗ്രൂപ്പിനുമുള്ള ലോഗോകൾ. ഒന്ന് തിരഞ്ഞെടുക്കുക.',c1n:'ഞങ്ങൾ ഒരുക്കുന്ന ഫാം ഫ്രഷ് ഉൽപ്പന്നങ്ങളുടെ ഗ്രൂപ്പിനുള്ള ലോഗോ ആശയങ്ങൾ.',hint:'സൂം ചെയ്യാൻ സ്ക്രോൾ ചെയ്യുക അല്ലെങ്കിൽ പിഞ്ച് ചെയ്യുക. നീക്കി കാണാൻ വലിച്ചിടുക.',zin:'വലുതാക്കുക',zout:'ചെറുതാക്കുക',zfit:'സ്ക്രീനിന് ഒതുക്കുക',pickNone:'ഒരു ലോഗോ തൊട്ട് തിരഞ്ഞെടുക്കുക',picked:'നിങ്ങൾ തിരഞ്ഞെടുത്തത്',lock:'തിരഞ്ഞെടുപ്പ് ലോക്ക് ചെയ്ത് തുടരുക',used:'നേരത്തെ തിരഞ്ഞെടുത്തു',finalTitle:'ഏകദേശം കഴിഞ്ഞു',finalSub:'നിങ്ങളുടെ പേരോ അഭിപ്രായങ്ങളോ താഴെ എഴുതാം. ഇതെല്ലാം ഓപ്ഷണലാണ്.',bnameTitle:'ബിസിനസ്സിന് ഒരു പേര് നിർദ്ദേശിക്കൂ',bnameDesc:'ഞങ്ങളുടെ ഹൈടെക് ഫാമിനും ഫ്രഷ് ഉൽപ്പന്നങ്ങൾക്കും അനുയോജ്യമായ, മനസ്സിൽ തങ്ങുന്ന ഒരു പേര് നിർദ്ദേശിക്കാനുണ്ടോ? താൽപ്പര്യമുണ്ടെങ്കിൽ താഴെ എഴുതാം—ഇത് പൂർണ്ണമായും ഓപ്ഷണലാണ്.',opt:'(ഓപ്ഷണൽ)',bnameP:'നിങ്ങൾക്കിഷ്ടമുള്ള ഒരു പേര് (ഓപ്ഷണൽ)',vnameL:'നിങ്ങളുടെ പേര്',vnameP:'താൽപര്യമില്ലെങ്കിൽ പേര് നൽകേണ്ടതില്ല ',remL:'അഭിപ്രായങ്ങൾ',remP:'ലോഗോകളെക്കുറിച്ചുള്ള നിങ്ങളുടെ അഭിപ്രായം എഴുതൂ',change:'മാറ്റുക',submit:'എന്റെ തിരഞ്ഞെടുപ്പുകൾ അയയ്ക്കുക',sending:'അയയ്ക്കുന്നു…',retry:'അയയ്ക്കാനായില്ല. വീണ്ടും ശ്രമിക്കുക',thx:'നിങ്ങളുടെ പിന്തുണയ്ക്ക് നന്ദി',thxS:'നിങ്ങളുടെ അഭിപ്രായങ്ങൾ ഞങ്ങൾക്ക് ലഭിച്ചു. ഓരോ അഭിപ്രായവും ആളുകൾക്ക് ഇഷ്ടമാകുന്ന ഒരു ബ്രാൻഡ് രൂപപ്പെടുത്താൻ സഹായിക്കുന്നു. നിങ്ങളുടെ സമയത്തിന് ഹൃദയപൂർവം നന്ദി.',s0:'ഉൽപ്പന്നങ്ങൾ',s1:'ഗ്രൂപ്പ്',s2:'പേര്',nf:'ചിത്രം കണ്ടില്ല'}};
+const t=k=>I18N[lang][k];
+function applyLang(){
+  const q=(s,v)=>{const e=document.querySelector(s);if(e)e.textContent=v};
+  q('.brand',t('brand'));q('#v-home h1',t('homeTitle'));q('#v-home .lead',t('homeLead'));q('#onceNote',t('onceNote'));
+  [1,2,3].forEach(n=>q('#v-home .how li:nth-child('+n+')',t('how'+n)));
+  q('#start',t('start'));q('#v-final h1',t('finalTitle'));q('#v-final .sub',t('finalSub'));
+  q('#bnameTitle',t('bnameTitle'));q('#bnameDesc',t('bnameDesc'));
+  document.querySelector('label[for=vname]').innerHTML=t('vnameL')+' <span>'+t('opt')+'</span>';
+  document.querySelector('label[for=remarks]').innerHTML=t('remL')+' <span>'+t('opt')+'</span>';
+  document.getElementById('bname').placeholder=t('bnameP');document.getElementById('vname').placeholder=t('vnameP');document.getElementById('remarks').placeholder=t('remP');
+  if(!document.getElementById('submit').disabled)q('#submit',t('submit'));
+  q('#hint',t('hint'));
+  [['zin','zin'],['zout','zout'],['zfit','zfit']].forEach(a=>document.getElementById(a[0]).setAttribute('aria-label',t(a[1])));
+  q('.thanks h1',t('thx'));q('.thanks .sub',t('thxS'));
+  document.getElementById('langBtn').textContent=lang==='en'?'മലയാളം':'English';
+  document.title=t('brand');
+}
+
+/* ============ Supabase storage layer + IP + URL Source + Browser Lock ============ */
+const VOTE_SOURCE=(()=>{
+  const p=new URLSearchParams(window.location.search);
+  return (p.get("src")||p.get("ref")||"direct").trim().toLowerCase().slice(0,40);
+})();
+
+const Store={
+  hasSubmitted(){
+    try{ return localStorage.getItem(CONFIG.STORAGE_KEY)!==null; }catch(e){ return false; }
+  },
+  async getUserIP(){
+    try{
+      const ctrl=new AbortController();
+      const timer=setTimeout(()=>ctrl.abort(),2500);
+      const res=await fetch("https://api.ipify.org?format=json",{signal:ctrl.signal});
+      clearTimeout(timer);
+      const data=await res.json();
+      return data.ip||"unknown";
+    }catch(e){
+      return "unavailable";
+    }
+  },
+  getBrowserDefaults(){
+    let timezone="unknown";
+    try{ timezone=Intl.DateTimeFormat().resolvedOptions().timeZone||"unknown"; }catch(e){}
+    const browser_locale=navigator.language||"unknown";
+    const device_type=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||"")?"Mobile":"Desktop";
+    return {timezone,browser_locale,device_type};
+  },
+  async submit(payload){
+    if(this.hasSubmitted()) return {ok:true};
+    const baseUrl=(CONFIG.SUPABASE_URL||"").trim().replace(/\/+$/,"");
+    const apiKey=(CONFIG.SUPABASE_ANON_KEY||"").trim();
+    const userIp=await this.getUserIP();
+    const info=this.getBrowserDefaults();
+    const row={
+      product_logo: payload.selections.product,
+      group_logo: payload.selections.group,
+      business_name: payload.businessName||null,
+      voter_name: payload.voterName||null,
+      remarks: payload.remarks||null,
+      language: payload.language,
+      vote_source: VOTE_SOURCE,
+      user_ip: userIp,
+      timezone: info.timezone,
+      browser_locale: info.browser_locale,
+      device_type: info.device_type,
+      submitted_at: payload.submittedAt
+    };
+    const res=await fetch(`${CONFIG.SUPABASE_URL}/rest/v1/logo_votes`,{
+      method:"POST",
+      headers:{
+        "apikey": CONFIG.SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${CONFIG.SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body:JSON.stringify(row)
+    });
+    if(res.ok){
+      try{ localStorage.setItem(CONFIG.STORAGE_KEY,JSON.stringify({submittedAt:payload.submittedAt,language:payload.language})); }catch(e){}
+    }
+    return {ok:res.ok};
+  }
+};
+
+/* ============ App state ============ */
+const $=id=>document.getElementById(id);
+const state={step:0,sel:{},locked:{}};
+const cats=CONFIG.categories;
+const stage=$("stage"),plane=$("plane");
+const view={x:0,y:0,s:1,fit:1};
+
+function renderSteps(){
+  const labels=[t('s0'),t('s1'),t('s2')];
+  $("steps").innerHTML=labels.map((l,i)=>`<div class="step ${state.step===i?"on":""} ${(i<cats.length&&state.locked[cats[i].key])||state.step>i?"done":""}"><i></i><span>${l}</span></div>`).join("");
+}
+function show(id){state.view=id;document.querySelectorAll(".view").forEach(v=>v.classList.toggle("show",v.id===id))}
+
+function renderCat(){
+  const c=cats[state.step];
+  show("v-cat");renderSteps();
+  $("cTitle").textContent=t('c'+state.step+'t');$("cSub").textContent=t('c'+state.step+'s');
+  const locked=!!state.locked[c.key];
+  stage.classList.toggle("locked",locked);
+  plane.innerHTML=c.logos.map((l,i)=>`<div class="card ${state.sel[c.key]===l.id?'sel':''} ${isOff(c,l)?'off':''}" data-id="${l.id}" style="animation-delay:${Math.min(i*40,600)}ms"><div class="img"><img src="${l.src}" data-base="${l.base||''}" alt="${l.name}" draggable="false"></div>${isOff(c,l)?`<em class="badge">${t('used')}</em>`:''}<div class="cap"><span>${l.name}</span><span class="tick"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 5"/></svg></span></div></div>`).join("");
+  const isMob=window.innerWidth<=640,ratio=stage.clientWidth/stage.clientHeight,cols=isMob?4:(ratio>1.5?7:ratio>1?5:3);
+  plane.style.gridTemplateColumns='repeat('+cols+',260px)';
+  updatePick();
+  requestAnimationFrame(()=>{fit(false)});
+  $("hint").style.opacity=1;
+}
+function updatePick(){
+  const c=cats[state.step],id=state.sel[c.key],l=c.logos.find(x=>x.id===id);
+  $("pick").innerHTML=l?`${t('picked')} <b>${l.name}</b>`:t('pickNone');
+  $("lock").disabled=!l;
+  $("lock").textContent=t('lock');
+}
+function select(card,ev){
+  const c=cats[state.step];
+  if(state.locked[c.key]||card.classList.contains('off'))return;
+  state.sel[c.key]=card.dataset.id;
+  plane.querySelectorAll(".card").forEach(x=>x.classList.toggle("sel",x===card));
+  const r=card.getBoundingClientRect(),d=Math.max(r.width,r.height)*.5,rp=document.createElement("span");
+  rp.className="ripple";rp.style.cssText=`width:${d}px;height:${d}px;left:${(ev.clientX-r.left)/view.s-d/2/view.s}px;top:${(ev.clientY-r.top)/view.s-d/2/view.s}px`;
+  card.appendChild(rp);setTimeout(()=>rp.remove(),700);
+  updatePick();
+}
+$("lock").onclick=()=>{
+  const c=cats[state.step];state.locked[c.key]=true;
+  stage.classList.add("locked");
+  setTimeout(()=>{state.step++;state.step<cats.length?renderCat():renderFinal()},450);
+};
+function renderFinal(){
+  show("v-final");renderSteps();
+  $("recap").innerHTML=cats.map((c,i)=>{const l=c.logos.find(x=>x.id===state.sel[c.key]);return `<div><img src="${l.src}" data-base="${l.base||''}" alt="${l.name}"><small>${t('c'+i+'t')}</small><b>${l.name}</b><br><a data-edit="${i}" tabindex="0">${t('change')}</a></div>`}).join("");
+  $("recap").querySelectorAll("[data-edit]").forEach(a=>a.onclick=()=>{const i=+a.dataset.edit;state.locked[cats[i].key]=false;if(i===0){delete state.sel[cats[1].key];state.locked[cats[1].key]=false}state.step=i;renderCat()});
+}
+$("submit").onclick=async()=>{
+  const b=$("submit");b.disabled=true;b.textContent=t('sending');
+  const payload={selections:{...state.sel},language:lang,businessName:$("bname").value.trim(),voterName:$("vname").value.trim(),remarks:$("remarks").value.trim(),submittedAt:new Date().toISOString()};
+  try{const r=await Store.submit(payload);if(!r.ok)throw 0;show("v-done");$("steps").innerHTML=""}
+  catch(e){b.disabled=false;b.textContent=t('retry')}
+};
+
+/* ============ Zoom and pan (the whole container moves together) ============ */
+function apply(smooth){
+  plane.classList.toggle("smooth",!!smooth);
+  plane.style.transform=`translate(${view.x}px,${view.y}px) scale(${view.s})`;
+}
+function fit(smooth=true){
+  const sw=stage.clientWidth,sh=stage.clientHeight,cw=plane.offsetWidth,ch=plane.offsetHeight;
+  view.fit=Math.min(sw/cw,sh/ch,1.2);view.s=view.fit;
+  view.x=(sw-cw*view.s)/2;view.y=(sh-ch*view.s)/2;apply(smooth);
+}
+function zoomAt(cx,cy,f,smooth){
+  const ns=Math.min(Math.max(view.s*f,view.fit*.6),5);
+  view.x=cx-(cx-view.x)*(ns/view.s);view.y=cy-(cy-view.y)*(ns/view.s);view.s=ns;apply(smooth);
+}
+const center=()=>[stage.clientWidth/2,stage.clientHeight/2];
+$("zin").onclick=()=>zoomAt(...center(),1.35,true);
+$("zout").onclick=()=>zoomAt(...center(),1/1.35,true);
+$("zfit").onclick=()=>fit(true);
+window.addEventListener("resize",()=>{if($("v-cat").classList.contains("show"))fit(false)});
+stage.addEventListener("wheel",e=>{e.preventDefault();const r=stage.getBoundingClientRect();zoomAt(e.clientX-r.left,e.clientY-r.top,Math.exp(-e.deltaY*.0015),false);$("hint").style.opacity=0},{passive:false});
+
+const ptrs=new Map();let drag=false,pinched=false,start=null,downEl=null,lastDist=0;
+stage.addEventListener("pointerdown",e=>{
+  if(e.target.closest(".tools"))return;
+  ptrs.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(ptrs.size===1){start={x:e.clientX,y:e.clientY};drag=false;pinched=false;downEl=e.target.closest(".card")}
+  if(ptrs.size===2){pinched=true;const [a,b]=[...ptrs.values()];lastDist=Math.hypot(a.x-b.x,a.y-b.y)}
+});
+stage.addEventListener("pointermove",e=>{
+  const p=ptrs.get(e.pointerId);if(!p)return;
+  const dx=e.clientX-p.x,dy=e.clientY-p.y;
+  if(ptrs.size===2){
+    p.x=e.clientX;p.y=e.clientY;
+    const [a,b]=[...ptrs.values()],d=Math.hypot(a.x-b.x,a.y-b.y),r=stage.getBoundingClientRect();
+    if(lastDist)zoomAt((a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top,d/lastDist,false);
+    lastDist=d;$("hint").style.opacity=0;return;
+  }
+  if(!drag&&Math.hypot(e.clientX-start.x,e.clientY-start.y)>6){drag=true;stage.setPointerCapture(e.pointerId);stage.classList.add("grabbing");$("hint").style.opacity=0}
+  if(drag){view.x+=dx;view.y+=dy;apply(false)}
+  p.x=e.clientX;p.y=e.clientY;
+});
+function up(e){
+  if(!ptrs.has(e.pointerId))return;
+  ptrs.delete(e.pointerId);stage.classList.remove("grabbing");
+  if(e.type==="pointerup"&&!drag&&!pinched&&downEl&&ptrs.size===0)select(downEl,e);
+  if(ptrs.size===0){downEl=null}
+}
+stage.addEventListener("pointerup",up);stage.addEventListener("pointercancel",up);
+
+function renderHome(){
+  show("v-home");$("steps").innerHTML="";
+  const side=["l","r"];
+  $("duo").innerHTML=cats.map((c,i)=>`<div class="panel ${side[i]}"><h2>${t('c'+i+'t')}</h2><p>${t('c'+i+'n')}</p><div class="thumbs">${c.logos.slice(0,5).map(l=>`<img src="${l.src}" data-base="${l.base||''}" alt="${l.name}">`).join("")}</div></div>`).join("");
+}
+$("start").onclick=()=>renderCat();
+const isOff=(c,l)=>c!==cats[0]&&state.sel[cats[0].key]===l.id;
+function setLang(l){
+  lang=l;document.documentElement.lang=l;applyLang();$('langBtn').style.display='';
+  if(Store.hasSubmitted()){show('v-done');$('steps').innerHTML='';return;}
+  if(state.view==='v-lang'||state.view==='v-home')renderHome();
+  else if(state.view==='v-cat')renderCat();
+  else if(state.view==='v-final')renderFinal();
+}
+$('langBtn').onclick=()=>setLang(lang==='en'?'ml':'en');
+$('pickEn').onclick=()=>setLang('en');
+$('pickMl').onclick=()=>setLang('ml');
+/* try the next file extension when a logo image fails to load */
+document.addEventListener('error',e=>{
+  const im=e.target;if(!im||im.tagName!=='IMG')return;
+  const b=im.dataset.base;
+  if(b){const k=(+im.dataset.k||0)+1;if(k<LOGO_EXTS.length){im.dataset.k=k;im.src=b+'.'+LOGO_EXTS[k];return}}
+  const s=document.createElement('span');s.textContent=t('nf');s.style.cssText='color:#66736b;font-size:12px;text-align:center';
+  im.replaceWith(s);
+},true);
+
+if(Store.hasSubmitted()){
+  try{
+    const saved=JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY)||"{}");
+    if(saved.language)lang=saved.language;
+  }catch(e){}
+  document.documentElement.lang=lang;
+  applyLang();
+  $('langBtn').style.display='';
+  $('steps').innerHTML='';
+  show('v-done');
+}else{
+  show('v-lang');
+}
+</script>
+</body>
+</html>
